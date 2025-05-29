@@ -37,7 +37,7 @@ repos:
         files: ^scripts/python/.*\.py$
 
   - repo: https://github.com/pycqa/pylint
-    rev: v3.0.3
+    rev: v3.3.7
     hooks:
       - id: pylint
         files: ^scripts/python/.*\.py$
@@ -45,56 +45,43 @@ repos:
         args: ["--exit-zero", "--reports=no"]
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.8.0
+    rev: v1.16.0
     hooks:
       - id: mypy
         files: ^scripts/python/.*\.py$
         additional_dependencies: [types-PyYAML, types-requests]
         args: ["--ignore-missing-imports", "--no-strict-optional"]
 
-  # Security scanning - using local hook for better control
+  # Local hooks
   - repo: local
     hooks:
-      - id: bandit-security
-        name: Bandit Security Scan
-        entry: bandit
+      - id: comprehensive-lint
+        name: Comprehensive Linting Check
+        entry: ./scripts/hooks/pre-commit.sh
         language: system
-        args: ["-r", "scripts/python/", "-x", "scripts/python/tests/", "--format", "txt", "--exit-zero"]
-        files: ^scripts/python/.*\.py$
-        exclude: ^scripts/python/tests/.*$
+        files: ^(scripts/|\.github/workflows/|.*\.md|.*\.yml|.*\.yaml).*$
+        pass_filenames: false
 
   # Bash/Shell linting
   - repo: https://github.com/shellcheck-py/shellcheck-py
-    rev: v0.9.0.6
+    rev: v0.10.0.1
     hooks:
       - id: shellcheck
         files: ^scripts/bash/.*\.sh$
+        args: [--external-sources]
 
-  # Custom hooks using our scripts
-  - repo: local
-    hooks:
-      # Custom comprehensive linting check
-      - id: comprehensive-lint
-        name: Comprehensive Linting Check
-        entry: scripts/hooks/pre-commit.sh
-        language: script
-        stages: [pre-commit]
-        pass_filenames: false
-        always_run: true
-
-  # YAML linting
-  - repo: https://github.com/adrienverge/yamllint
-    rev: v1.33.0
+  # YAML and Markdown linting
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.36.0
     hooks:
       - id: yamllint
-        args: ["-d", "relaxed"]
+        args: [-d, 'relaxed']
 
-  # Markdown linting - make it non-blocking
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.39.0
+    rev: v0.43.0
     hooks:
       - id: markdownlint
-        args: ["--fix"]
+        args: [--fix]
 
 # Global settings
 ci:

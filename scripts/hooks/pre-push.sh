@@ -77,6 +77,44 @@ if ! ./scripts/hooks/pre-commit.sh; then
 fi
 echo
 
+# Additional CI-specific formatting checks
+print_section "CI Pipeline Formatting Checks"
+
+# Black formatting check (exactly as CI does it)
+print_section "Black Code Formatting"
+if black --check --diff scripts/python/; then
+    print_success "Black formatting check passed"
+else
+    print_error "Black formatting check failed - run 'black scripts/python/' to fix"
+    TESTS_FAILED=1
+fi
+
+# isort import sorting check (exactly as CI does it)
+print_section "isort Import Sorting"
+if isort --check-only --diff scripts/python/; then
+    print_success "isort import sorting check passed"
+else
+    print_error "isort import sorting check failed - run 'isort scripts/python/' to fix"
+    TESTS_FAILED=1
+fi
+
+# Pylint check
+print_section "Pylint Code Analysis"
+if pylint scripts/python/ --exit-zero; then
+    print_success "Pylint check completed"
+else
+    print_warning "Pylint issues found (review recommended)"
+fi
+
+# MyPy type checking
+print_section "MyPy Type Checking"
+if mypy scripts/python/ --ignore-missing-imports; then
+    print_success "MyPy type checking passed"
+else
+    print_warning "MyPy type checking issues found (review recommended)"
+fi
+echo
+
 # Python Tests
 print_section "Python Unit Tests"
 if [ -d "scripts/python/tests" ] && find scripts/python/tests -name "test_*.py" -type f | grep -q .; then

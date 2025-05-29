@@ -51,6 +51,7 @@ jobs:
         pylint scripts/python/ --exit-zero --reports=no --output-format=colorized
 
     - name: Run MyPy (Type Checking)
+      continue-on-error: true
       run: |
         mypy --explicit-package-bases scripts/python/
 

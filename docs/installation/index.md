@@ -1,17 +1,16 @@
 ---
-layout: single
-title: "Installation"
+layout: default
+title: Installation
+nav_order: 2
+has_children: true
 description: "Install AI Command Auditor quickly and easily"
-toc: true
-toc_label: "Installation Methods"
-toc_icon: "download"
-sidebar:
-  nav: "docs"
 ---
 
 # 📥 Installation Guide
+{: .fs-8 }
 
 AI Command Auditor offers multiple installation methods to fit your development environment and preferences. Choose the method that works best for your use case.
+{: .fs-6 .fw-300 }
 
 ## 🚀 Quick Start (Recommended)
 
@@ -22,7 +21,6 @@ curl -fsSL https://raw.githubusercontent.com/etherisc/ai-command-auditor/main/in
 ```
 
 This will:
-
 - ✅ Detect your system and install dependencies
 - ✅ Install the AI Command Auditor CLI
 - ✅ Set up default configuration
@@ -47,21 +45,18 @@ ai-auditor --help
 Before installing, ensure your system meets these requirements:
 
 ### Minimum Requirements
-
 - **Operating System**: Linux, macOS, or Windows (WSL2)
 - **Python**: 3.8 or higher
 - **Memory**: 512MB RAM
 - **Disk Space**: 100MB free space
 
 ### Recommended Requirements
-
 - **Python**: 3.10 or higher
 - **Memory**: 1GB RAM
 - **Git**: For git hooks integration
 - **Internet**: For AI API calls
 
 ### Supported Platforms
-
 - ✅ Ubuntu 18.04+
 - ✅ Debian 10+
 - ✅ CentOS 7+
@@ -70,37 +65,12 @@ Before installing, ensure your system meets these requirements:
 
 ## 🛠️ Installation Methods
 
-Choose the installation method that best fits your needs:
-
-<div class="installation-grid">
-  <div class="install-method">
-    <h3>🚀 One-Line Installer</h3>
-    <p><strong>Best for:</strong> Quick setup, production use</p>
-    <p>Automatic installation with sensible defaults</p>
-    <a href="/installation/methods/#one-line-installer" class="btn btn--primary">View Guide</a>
-  </div>
-
-  <div class="install-method">
-    <h3>🐍 Python Package</h3>
-    <p><strong>Best for:</strong> Python developers, custom environments</p>
-    <p>Install via pip with full control</p>
-    <a href="/installation/methods/#python-package" class="btn btn--primary">View Guide</a>
-  </div>
-
-  <div class="install-method">
-    <h3>🐳 Devcontainer</h3>
-    <p><strong>Best for:</strong> VS Code users, containerized development</p>
-    <p>Automatic setup in development containers</p>
-    <a href="/installation/methods/#devcontainer" class="btn btn--primary">View Guide</a>
-  </div>
-
-  <div class="install-method">
-    <h3>⚙️ Manual Installation</h3>
-    <p><strong>Best for:</strong> Advanced users, custom setups</p>
-    <p>Step-by-step manual configuration</p>
-    <a href="/installation/methods/#manual-installation" class="btn btn--primary">View Guide</a>
-  </div>
-</div>
+| Method | Best For | Description |
+|:-------|:---------|:------------|
+| [One-Line Installer](/installation/methods#one-line-installer) | Quick setup, production use | Automatic installation with sensible defaults |
+| [Python Package](/installation/methods#python-package) | Python developers, custom environments | Install via pip with full control |
+| [Devcontainer](/installation/methods#devcontainer) | VS Code users, containerized development | Automatic setup in development containers |
+| [Manual Installation](/installation/methods#manual-installation) | Advanced users, custom setups | Step-by-step manual configuration |
 
 ## 🎯 Environment-Specific Guides
 
@@ -133,7 +103,6 @@ Choose the installation method that best fits your needs:
 ## ⚡ Quick Installation Examples
 
 ### For Python Projects
-
 ```bash
 # Install with Python template
 curl -fsSL https://raw.githubusercontent.com/etherisc/ai-command-auditor/main/install.sh | sh -s -- --template python
@@ -143,7 +112,6 @@ pip install ai-command-auditor[python]
 ```
 
 ### For Node.js Projects
-
 ```bash
 # Install with Node.js template
 curl -fsSL https://raw.githubusercontent.com/etherisc/ai-command-auditor/main/install.sh | sh -s -- --template nodejs
@@ -153,7 +121,6 @@ npm run audit-setup
 ```
 
 ### For DevOps/Security Teams
-
 ```bash
 # Install with strict security settings
 curl -fsSL https://raw.githubusercontent.com/etherisc/ai-command-auditor/main/install.sh | sh -s -- --template security --security-level strict
@@ -164,14 +131,12 @@ curl -fsSL https://raw.githubusercontent.com/etherisc/ai-command-auditor/main/in
 After installation, you may want to:
 
 1. **Initialize in your project**:
-
    ```bash
    cd your-project
    ai-auditor init
    ```
 
 2. **Customize configuration**:
-
    ```bash
    # Edit main config
    nano .ai-auditor/config/auditor.yml
@@ -181,13 +146,11 @@ After installation, you may want to:
    ```
 
 3. **Set up git hooks**:
-
    ```bash
    ai-auditor setup-hooks
    ```
 
 4. **Test the setup**:
-
    ```bash
    ai-auditor check-command "rm -rf /"
    ```
@@ -196,75 +159,21 @@ After installation, you may want to:
 
 Having installation issues? Here are common solutions:
 
-### Permission Errors
+{: .note }
+> **Permission Errors**: If you get permission errors, try running with `sudo` or check your user permissions.
 
-```bash
-# If you get permission errors, try:
-sudo curl -fsSL https://raw.githubusercontent.com/etherisc/ai-command-auditor/main/install.sh | sh
+{: .warning }
+> **Python Version**: Make sure you have Python 3.8+ installed. Check with `python --version`.
 
-# Or install to user directory:
-curl -fsSL https://raw.githubusercontent.com/etherisc/ai-command-auditor/main/install.sh | sh -s -- --user-install
-```
+{: .highlight }
+> **Need Help?**: Visit our [Support](/support) section for more troubleshooting tips and community help.
 
-### Python Version Issues
+---
 
-```bash
-# Check Python version
-python3 --version
-
-# If Python is too old, update it:
-# Ubuntu/Debian:
-sudo apt update && sudo apt install python3.10
-
-# macOS:
-brew install python@3.10
-```
-
-### Network Issues
-
-```bash
-# If download fails, try manual download:
-wget https://raw.githubusercontent.com/etherisc/ai-command-auditor/main/install.sh
-chmod +x install.sh
-./install.sh
-```
-
-## 📚 Next Steps
-
-Once installed, check out these resources:
-
-- 📖 [Configuration Guide](/configuration/) - Customize AI Command Auditor
-- 🎯 [Getting Started Tutorial](/examples/tutorial/) - Learn the basics
-- 🔌 [API Reference](/api/) - Explore CLI commands
-- ❓ [FAQ](/support/faq/) - Common questions and answers
-
-Need help? Visit our [support page](/support/) or [file an issue](https://github.com/etherisc/ai-command-auditor/issues).
+[Next: Installation Methods](/installation/methods){: .btn .btn-primary }
+[Skip to Configuration](/configuration){: .btn .btn-outline }
 
 <style>
-.installation-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin: 2rem 0;
-}
-
-.install-method {
-  padding: 1.5rem;
-  border: 1px solid #e1e1e1;
-  border-radius: 8px;
-  text-align: center;
-  background: #f8f9fa;
-}
-
-.install-method h3 {
-  margin-bottom: 1rem;
-  color: #2c3e50;
-}
-
-.install-method p {
-  margin-bottom: 0.5rem;
-}
-
 .environment-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -290,10 +199,6 @@ Need help? Visit our [support page](/support/) or [file an issue](https://github
 }
 
 @media (max-width: 768px) {
-  .installation-grid {
-    grid-template-columns: 1fr;
-  }
-
   .environment-grid {
     grid-template-columns: repeat(2, 1fr);
   }

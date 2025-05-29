@@ -1,0 +1,14 @@
+# Essential dependencies for Python script development
+# Minimal requirements for small scripts and utilities
+
+# HTTP requests and API calls
+requests>=2.28.0
+
+# Environment variable management
+python-dotenv>=0.19.0
+
+# Configuration file handling (YAML)
+pyyaml>=6.0
+
+# Command line interface (optional - can use built-in argparse instead)
+click>=8.0.0

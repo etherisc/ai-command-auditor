@@ -1,0 +1,20 @@
+# Development dependencies for small Python scripts
+# Include production requirements
+-r requirements.txt
+
+# Code formatting
+black>=22.0.0
+isort>=5.10.0
+
+# Basic linting (choose one - flake8 is lightweight)
+flake8>=5.0.0
+
+# Testing framework
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# Development shell
+ipython>=8.5.0
+
+# HTTP testing (for scripts that use requests)
+responses>=0.21.0

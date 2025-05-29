@@ -60,3 +60,4 @@ sphinx-build -b html . _build/html
 - Add cross-references between related documents
 - Include screenshots and diagrams where helpful
 - Keep examples current and tested
+# Test trigger

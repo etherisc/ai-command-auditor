@@ -25,6 +25,7 @@ This repository provides tools and scripts to help developers, system administra
 ### Development Setup
 
 1. **Clone the repository**
+
    ```bash
    git clone <repository-url>
    cd ai-command-auditor
@@ -36,6 +37,7 @@ This repository provides tools and scripts to help developers, system administra
    - Wait for the container to build (first time may take a few minutes)
 
 3. **Verify Installation**
+
    ```bash
    python --version
    gh --version
@@ -74,6 +76,7 @@ ai-command-auditor/
 ### Running Scripts
 
 **Python Scripts:**
+
 ```bash
 # From the container terminal
 cd scripts/python
@@ -81,6 +84,7 @@ python -m core.script_name
 ```
 
 **Bash Scripts:**
+
 ```bash
 # From the container terminal
 cd scripts/bash
@@ -99,6 +103,7 @@ cp config/template.conf config/local.conf
 ## 🧪 Testing
 
 Run the test suite:
+
 ```bash
 cd scripts/python
 python -m pytest tests/
@@ -131,11 +136,13 @@ python -m pytest tests/
 ## 📋 Requirements
 
 ### System Requirements
+
 - Docker 20.10+
 - VS Code with Dev Containers extension
 - Git 2.20+
 
 ### Container Includes
+
 - Python 3.11+
 - GitHub CLI
 - Essential development tools
@@ -146,16 +153,19 @@ python -m pytest tests/
 ### Common Issues
 
 **Container fails to build:**
+
 - Ensure Docker is running
 - Check Docker daemon is accessible
 - Try rebuilding: `Dev Containers: Rebuild Container`
 
 **Scripts not executable:**
+
 ```bash
 chmod +x scripts/bash/*.sh
 ```
 
 **Python module not found:**
+
 ```bash
 export PYTHONPATH="${PYTHONPATH}:/workspaces/ai-command-auditor/scripts/python"
 ```
@@ -178,4 +188,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Happy Auditing! 🔍✨** 
+**Happy Auditing! 🔍✨**

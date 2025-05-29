@@ -12,17 +12,17 @@ app:
 logging:
   # Log file location (relative to project root)
   log_file: "logs/auditor.log"
-  
+
   # Log rotation settings
   max_file_size: "10MB"
   backup_count: 5
-  
+
   # Log format
   format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-  
+
   # Console output
   console: true
-  
+
   # Log levels: DEBUG, INFO, WARNING, ERROR, CRITICAL
   level: "INFO"
 
@@ -32,17 +32,17 @@ analysis:
   security_analysis: true
   performance_analysis: true
   compliance_analysis: true
-  
+
   # Analysis thresholds
   security:
     risk_threshold: 0.7
     scan_timeout: 30  # seconds
-  
+
   performance:
     memory_threshold: 80  # percentage
     cpu_threshold: 90     # percentage
     timeout: 60          # seconds
-  
+
   # Command patterns to monitor
   patterns:
     suspicious_commands:
@@ -50,7 +50,7 @@ analysis:
       - "chmod 777"
       - "sudo su"
       - "curl.*|.*sh"
-    
+
     high_risk_operations:
       - "database.*drop"
       - "user.*delete"
@@ -63,13 +63,13 @@ reporting:
     - "json"
     - "html"
     - "pdf"
-  
+
   # Report storage
   output_dir: "data/output/reports"
-  
+
   # Report retention (days)
   retention_days: 30
-  
+
   # Email notifications (if configured)
   notifications:
     enabled: false
@@ -81,13 +81,13 @@ reporting:
 data:
   # Input data directory
   input_dir: "data/input"
-  
+
   # Output data directory
   output_dir: "data/output"
-  
+
   # Sample data directory
   samples_dir: "data/samples"
-  
+
   # Data retention policy (days)
   retention:
     raw_data: 90
@@ -100,12 +100,12 @@ security:
   encryption:
     enabled: true
     algorithm: "AES-256"
-  
+
   # Access control
   access_control:
     enabled: true
     require_auth: false
-  
+
   # Audit logging
   audit_log:
     enabled: true
@@ -116,10 +116,10 @@ performance:
   # Resource limits
   max_memory_usage: "2GB"
   max_cpu_usage: 80  # percentage
-  
+
   # Parallel processing
   max_workers: 4
-  
+
   # Cache settings
   cache:
     enabled: true
@@ -132,12 +132,12 @@ integrations:
   github:
     enabled: false
     token: ""  # Set via environment variable GH_TOKEN
-  
+
   # Docker
   docker:
     enabled: true
     socket: "/var/run/docker.sock"
-  
+
   # External APIs
   apis:
     enabled: false
@@ -147,13 +147,13 @@ integrations:
 development:
   # Enable debug mode
   debug: true
-  
+
   # Hot reload
   hot_reload: true
-  
+
   # Test data
   use_test_data: true
-  
+
   # Mock external services
   mock_services: true
 
@@ -163,4 +163,4 @@ env_vars:
   log_level: "LOG_LEVEL"
   debug: "DEBUG_MODE"
   github_token: "GH_TOKEN"
-  database_url: "DATABASE_URL" 
+  database_url: "DATABASE_URL"

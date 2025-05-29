@@ -5,21 +5,21 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    
+
     volumes:
       # Mount the workspace folder
       - ..:/workspaces/ai-command-auditor:cached
-      
+
     # Keep container running
     command: sleep infinity
-    
+
     # Environment variables
     environment:
       - PYTHONPATH=/workspaces/ai-command-auditor/scripts/python
-      
+
     # Working directory
     working_dir: /workspaces/ai-command-auditor
-    
+
     # Port forwarding
     ports:
       - "8000:8000"
@@ -27,19 +27,19 @@ services:
       - "3000:3000"
       - "5000:5000"
       - "9000:9000"
-    
+
     # User configuration
     user: vscode
-    
+
     # Security options
     security_opt:
       - seccomp:unconfined
-    
+
     # Capabilities for debugging and system-level tools
     cap_add:
       - SYS_PTRACE
       - NET_ADMIN
-    
+
     # Resource limits (adjust as needed)
     deploy:
       resources:
@@ -52,4 +52,4 @@ volumes:
   devcontainer-bash-history:
     driver: local
   devcontainer-pip-cache:
-    driver: local 
+    driver: local

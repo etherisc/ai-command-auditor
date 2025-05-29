@@ -47,4 +47,4 @@ ENV PATH="/home/vscode/.local/bin:${PATH}"
 ENV PYTHONPATH="/workspaces/ai-command-auditor/scripts/python:${PYTHONPATH}"
 
 # Default command
-CMD ["bash"] 
+CMD ["bash"]

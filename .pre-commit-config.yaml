@@ -1,0 +1,102 @@
+# Pre-commit configuration for AI Command Auditor
+# See https://pre-commit.com for more information
+
+repos:
+  # Built-in hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: check-xml
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: check-symlinks
+      - id: check-executables-have-shebangs
+      - id: check-shebang-scripts-are-executable
+      - id: detect-private-key
+      - id: mixed-line-ending
+        args: ['--fix=lf']
+
+  # Python formatting and linting
+  - repo: https://github.com/psf/black
+    rev: 23.12.1
+    hooks:
+      - id: black
+        language_version: python3
+        files: ^scripts/python/.*\.py$
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: ["--profile", "black"]
+        files: ^scripts/python/.*\.py$
+
+  - repo: https://github.com/pycqa/pylint
+    rev: v3.0.3
+    hooks:
+      - id: pylint
+        files: ^scripts/python/.*\.py$
+        additional_dependencies: [pyyaml, openai, requests]
+        args: ["--exit-zero", "--reports=no"]
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.8.0
+    hooks:
+      - id: mypy
+        files: ^scripts/python/.*\.py$
+        additional_dependencies: [types-PyYAML, types-requests]
+        args: ["--ignore-missing-imports", "--no-strict-optional"]
+
+  # Security scanning - using local hook for better control
+  - repo: local
+    hooks:
+      - id: bandit-security
+        name: Bandit Security Scan
+        entry: bandit
+        language: system
+        args: ["-r", "scripts/python/", "-x", "scripts/python/tests/", "--format", "txt", "--exit-zero"]
+        files: ^scripts/python/.*\.py$
+        exclude: ^scripts/python/tests/.*$
+
+  # Bash/Shell linting
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.9.0.6
+    hooks:
+      - id: shellcheck
+        files: ^scripts/bash/.*\.sh$
+
+  # Custom hooks using our scripts
+  - repo: local
+    hooks:
+      # Custom comprehensive linting check
+      - id: comprehensive-lint
+        name: Comprehensive Linting Check
+        entry: scripts/hooks/pre-commit.sh
+        language: script
+        stages: [pre-commit]
+        pass_filenames: false
+        always_run: true
+
+  # YAML linting
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.33.0
+    hooks:
+      - id: yamllint
+        args: ["-d", "relaxed"]
+
+  # Markdown linting - make it non-blocking
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.39.0
+    hooks:
+      - id: markdownlint
+        args: ["--fix"]
+
+# Global settings
+ci:
+  autofix_prs: true
+  autoupdate_commit_msg: 'chore: update pre-commit hooks'

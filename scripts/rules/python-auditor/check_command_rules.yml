@@ -1,0 +1,13 @@
+# Muster-Regeln: ~/.check_command_rules.yml
+
+- pattern: "rm\\s+-rf\\s+/"
+  error: "Refusing to allow full root deletion."
+
+- pattern: "git pus(h)?"
+  replace: "git push"
+
+- pattern: "ls\\s+-lart"
+  replace: "ls -la"
+
+- pattern: "shutdown now"
+  error: "Shutdown command not allowed from this shell."

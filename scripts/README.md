@@ -8,7 +8,7 @@ This directory contains all the executable scripts for the AI Command Auditor pr
 scripts/
 ├── bash/           # Bash shell scripts
 │   ├── utils/      # Utility scripts
-│   ├── automation/ # Automation scripts  
+│   ├── automation/ # Automation scripts
 │   └── monitoring/ # System monitoring scripts
 └── python/         # Python modules and scripts
     ├── core/       # Core functionality
@@ -60,12 +60,14 @@ chmod +x scripts/bash/**/*.sh
 ## Adding New Scripts
 
 ### Python Module
+
 1. Create the module file in the appropriate subdirectory
 2. Add necessary imports to the `__init__.py` file
 3. Write corresponding tests
 4. Update documentation
 
 ### Bash Script
+
 1. Use the standard template from `.cursor/rules/cursor_rules.md`
 2. Make the script executable: `chmod +x script.sh`
 3. Add appropriate error handling and logging
@@ -80,8 +82,9 @@ chmod +x scripts/bash/**/*.sh
 ## Testing
 
 Run the Python test suite:
+
 ```bash
 pytest scripts/python/tests/
 ```
 
-Test bash scripts manually or with bats (Bash Automated Testing System) if configured. 
+Test bash scripts manually or with bats (Bash Automated Testing System) if configured.

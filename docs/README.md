@@ -15,18 +15,21 @@ docs/
 ## Documentation Types
 
 ### Planning Documentation (`planning/`)
+
 - Project planning documents
 - Architecture decisions
 - Design specifications
 - Development roadmaps
 
 ### API Documentation (`api/`)
+
 - Python module documentation
 - Function and class references
 - Usage examples
 - Integration guides
 
 ### User Guides (`user-guides/`)
+
 - Installation instructions
 - Usage tutorials
 - Best practices
@@ -44,6 +47,7 @@ docs/
 ## Building Documentation
 
 For API documentation, use Sphinx:
+
 ```bash
 cd docs/api
 sphinx-build -b html . _build/html
@@ -55,4 +59,4 @@ sphinx-build -b html . _build/html
 - Include table of contents for longer documents
 - Add cross-references between related documents
 - Include screenshots and diagrams where helpful
-- Keep examples current and tested 
+- Keep examples current and tested

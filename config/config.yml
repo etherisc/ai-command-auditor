@@ -1,0 +1,40 @@
+# AI Command Auditor Configuration
+# This file contains configuration overrides for the command checking system
+
+# Rules configuration (uncomment to override default paths)
+# rules:
+#   python_auditor_rules: "custom/path/to/rules.yml"
+#   ai_auditor_prompt: "custom/path/to/ai_rules.md"
+
+# AI configuration
+ai:
+  # OpenAI model to use for command analysis
+  model: "gpt-4o"
+
+  # API timeout in seconds
+  timeout: 30
+
+  # Maximum retry attempts
+  max_retries: 3
+
+  # API key (recommended to use OPENAI_API_KEY environment variable instead)
+  # api_key: "your-openai-api-key-here"
+
+# Security configuration
+security:
+  # Maximum allowed command length
+  max_command_length: 1000
+
+  # Whether to allow multiline commands
+  allow_multiline: false
+
+  # Additional blocked patterns (regex)
+  blocked_patterns:
+    - 'rm\s+-rf\s+/' # Block dangerous rm commands
+    # Add more patterns as needed
+
+# Logging configuration (uncomment to override defaults)
+# logging:
+#   level: "INFO"
+#   file: "logs/command_checker.log"
+#   format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

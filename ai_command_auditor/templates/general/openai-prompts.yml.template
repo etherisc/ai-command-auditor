@@ -1,0 +1,142 @@
+# AI Command Auditor General OpenAI Prompts Template
+# Language-agnostic AI prompts for universal use
+
+version: "1.0.0"
+template: "${template_type}"
+
+# General-purpose prompts
+prompts:
+  # Primary security analysis for any project type
+  security_analysis: |
+    You are a security expert analyzing shell commands for potential risks in a general development environment.
+    
+    Command to analyze: {command}
+    Context: {context}
+    Environment: ${environment}
+    Project: ${project_name}
+    
+    Please analyze this command for general security issues:
+    1. File system security risks
+    2. Network security concerns
+    3. Process and privilege escalation
+    4. Data integrity threats
+    5. Command injection vulnerabilities
+    6. System resource abuse
+    7. Malicious behavior patterns
+    
+    Rate the security risk on a scale of 1-10 and provide:
+    - Risk score (1-10)
+    - Risk category (low/medium/high/critical)
+    - Specific security concerns found
+    - Recommended action (allow/warn/block)
+    - Safer alternatives if blocking
+    
+    Respond in JSON format:
+    {
+      "risk_score": <1-10>,
+      "risk_category": "<low|medium|high|critical>",
+      "action": "<PASS|WARN|BLOCK>",
+      "concerns": ["<concern1>", "<concern2>"],
+      "message": "<explanation>",
+      "alternatives": ["<alt1>", "<alt2>"]
+    }
+
+  # General code and command review
+  general_review: |
+    Analyze this command for security and best practices:
+    
+    Command: {command}
+    Context: {context}
+    Project type: General development
+    
+    Check for:
+    - Security vulnerabilities
+    - Best practice violations
+    - Potential system risks
+    - Data security concerns
+    - Resource usage implications
+    
+    Provide structured feedback with general recommendations.
+
+  # System administration analysis
+  sysadmin_analysis: |
+    Analyze this system administration command:
+    
+    Command: {command}
+    System context: {system_context}
+    Privilege level: {privilege_level}
+    
+    Evaluate:
+    - System security impact
+    - Administrative privilege usage
+    - Service and process management
+    - File system and permission changes
+    - Network configuration changes
+    - Backup and recovery implications
+    
+    Provide system administration security recommendations.
+
+  # Development workflow analysis
+  dev_workflow_analysis: |
+    Analyze this development workflow command:
+    
+    Command: {command}
+    Development stage: {dev_stage}
+    Project phase: {project_phase}
+    
+    Evaluate:
+    - Development security practices
+    - Build and deployment safety
+    - Version control security
+    - Dependency management
+    - Testing and quality assurance
+    - CI/CD pipeline integration
+    
+    Recommend secure development practices.
+
+  # General compliance analysis
+  compliance_analysis: |
+    Review this command for general compliance and policy adherence:
+    
+    Command: {command}
+    Policy level: ${security_strict_mode}
+    Environment: ${environment}
+    
+    Verify compliance with:
+    - General security policies
+    - Data handling requirements
+    - Access control principles
+    - Audit and logging requirements
+    - Change management procedures
+    
+    Report any policy violations or concerns.
+
+  # Educational general analysis
+  educational_analysis: |
+    Explain this command for general learning purposes:
+    
+    Command: {command}
+    User level: {user_level}
+    Learning context: {learning_context}
+    
+    Provide:
+    - What the command does
+    - Why it might be risky
+    - How to use it safely
+    - General security principles involved
+    - Best practices for similar commands
+    - Learning resources for secure command usage
+
+# General prompt configuration
+prompt_config:
+  max_tokens: ${ai_max_tokens}
+  temperature: ${ai_temperature}
+  model: "${ai_model}"
+  timeout: ${ai_timeout}
+  
+# Context injection settings
+context:
+  include_environment: true
+  include_project_info: true
+  include_user_history: ${context_include_user_history}
+  include_file_context: ${context_include_file_context} 

@@ -1,0 +1,204 @@
+# AI Command Auditor Python Security Rules Template
+# Python-specific security rules and patterns
+
+version: "1.0.0"
+template: "${template_type}"
+
+# Python-specific dangerous patterns
+dangerous_patterns:
+  # Base patterns are inherited from base template
+  
+  # Python code execution risks
+  - pattern: 'eval\s*\('
+    severity: critical
+    message: "Use of eval() function is extremely dangerous"
+    action: block
+    
+  - pattern: 'exec\s*\('
+    severity: critical
+    message: "Use of exec() function is extremely dangerous"
+    action: block
+    
+  - pattern: '__import__\s*\('
+    severity: high
+    message: "Dynamic import using __import__ can be dangerous"
+    action: warn
+    
+  - pattern: 'compile\s*\('
+    severity: medium
+    message: "Dynamic code compilation should be reviewed"
+    action: warn
+
+  # Pickle/serialization risks
+  - pattern: 'pickle\.loads?\s*\('
+    severity: high
+    message: "Pickle deserialization can execute arbitrary code"
+    action: warn
+    
+  - pattern: 'cPickle\.loads?\s*\('
+    severity: high
+    message: "cPickle deserialization can execute arbitrary code"
+    action: warn
+    
+  - pattern: 'dill\.loads?\s*\('
+    severity: high
+    message: "Dill deserialization can execute arbitrary code"
+    action: warn
+
+  # Subprocess and system command risks
+  - pattern: 'subprocess\.(call|check_call|check_output|run).*shell=True'
+    severity: high
+    message: "Subprocess with shell=True can lead to command injection"
+    action: warn
+    
+  - pattern: 'os\.system\s*\('
+    severity: high
+    message: "os.system() is vulnerable to command injection"
+    action: warn
+    
+  - pattern: 'os\.popen\s*\('
+    severity: medium
+    message: "os.popen() should be used carefully"
+    action: warn
+
+  # File operation risks
+  - pattern: 'open.*\/.*w'
+    severity: medium
+    message: "Writing to absolute paths should be reviewed"
+    action: warn
+    
+  - pattern: 'shutil\.rmtree\s*\('
+    severity: high
+    message: "Recursive directory deletion"
+    action: warn
+
+  # Network and web risks
+  - pattern: 'urllib\.request\.urlopen\s*\('
+    severity: low
+    message: "URL requests should validate input"
+    action: log
+    
+  - pattern: 'requests\.(get|post|put|delete)\s*\('
+    severity: low
+    message: "HTTP requests should validate URLs"
+    action: log
+
+  # Package installation risks
+  - pattern: 'pip\s+install.*--trusted-host'
+    severity: high
+    message: "Installing from untrusted hosts is dangerous"
+    action: block
+    
+  - pattern: 'pip\s+install.*-i\s+http://'
+    severity: high
+    message: "Installing from HTTP sources is insecure"
+    action: block
+    
+  - pattern: 'easy_install\s+'
+    severity: medium
+    message: "easy_install is deprecated and less secure"
+    action: warn
+
+# Python-specific suspicious patterns
+suspicious_patterns:
+  # Code obfuscation
+  - pattern: 'base64\.b64decode\s*\('
+    severity: medium
+    message: "Base64 decoding may indicate obfuscated code"
+    action: warn
+    
+  - pattern: 'codecs\.decode\s*\('
+    severity: medium
+    message: "Codec decoding may indicate obfuscated code"
+    action: warn
+    
+  # Dynamic attribute access
+  - pattern: 'getattr\s*\('
+    severity: low
+    message: "Dynamic attribute access should be reviewed"
+    action: log
+    
+  - pattern: 'setattr\s*\('
+    severity: low
+    message: "Dynamic attribute setting should be reviewed"
+    action: log
+    
+  - pattern: 'hasattr\s*\('
+    severity: low
+    message: "Dynamic attribute checking should be reviewed"
+    action: log
+
+  # Input handling
+  - pattern: 'input\s*\('
+    severity: low
+    message: "User input should be validated"
+    action: log
+    
+  - pattern: 'raw_input\s*\('
+    severity: low
+    message: "User input should be validated"
+    action: log
+
+# Virtual environment and package management
+package_management:
+  # Safe package installation patterns
+  safe_patterns:
+    - 'pip install -r requirements\.txt'
+    - 'pip install --user'
+    - 'poetry install'
+    - 'conda install'
+    
+  # Dangerous package operations
+  dangerous_patterns:
+    - pattern: 'pip install.*--break-system-packages'
+      severity: high
+      message: "Breaking system packages can cause system instability"
+      action: warn
+      
+    - pattern: 'pip uninstall.*--yes'
+      severity: medium
+      message: "Automated package removal should be reviewed"
+      action: warn
+
+# Framework-specific rules
+frameworks:
+  django:
+    - pattern: 'django\.db\.connection\.cursor\(\)\.execute\('
+      severity: high
+      message: "Raw SQL execution can lead to SQL injection"
+      action: warn
+      
+  flask:
+    - pattern: 'render_template_string\s*\('
+      severity: high
+      message: "Template string rendering can lead to SSTI"
+      action: warn
+
+# Development tool integration
+development_tools:
+  # Code formatting and linting
+  safe_commands:
+    - 'black .'
+    - 'isort .'
+    - 'pylint'
+    - 'mypy'
+    - 'flake8'
+    
+  # Testing
+  test_commands:
+    - 'pytest'
+    - 'python -m pytest'
+    - 'unittest'
+    - 'nose2'
+
+# Security policy configuration
+policy:
+  block_on_critical: ${policy_block_on_critical}
+  warn_on_high: ${policy_warn_on_high}
+  log_all_matches: ${policy_log_all_matches}
+  require_approval_for: ${policy_require_approval_for}
+  
+  # Python-specific policies
+  require_virtual_env: false
+  validate_requirements_txt: true
+  check_setup_py: true 

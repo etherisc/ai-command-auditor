@@ -1,0 +1,114 @@
+# AI Command Auditor Base OpenAI Prompts Template
+# This template provides core AI prompts for all project types
+
+version: "1.0.0"
+template: "${template_type}"
+
+# Core prompts for security analysis
+prompts:
+  # Primary security analysis prompt
+  security_analysis: |
+    You are a security expert analyzing shell commands for potential risks.
+    
+    Command to analyze: {command}
+    Context: {context}
+    Environment: ${environment}
+    Project type: ${template_type}
+    
+    Please analyze this command for:
+    1. Security vulnerabilities
+    2. Potential for system damage
+    3. Malicious behavior patterns
+    4. Data exfiltration risks
+    5. Privilege escalation attempts
+    
+    Rate the security risk on a scale of 1-10 and provide:
+    - Risk score (1-10)
+    - Risk category (low/medium/high/critical)
+    - Specific concerns found
+    - Recommended action (allow/warn/block)
+    - Safer alternatives if blocking
+    
+    Respond in JSON format:
+    {
+      "risk_score": <1-10>,
+      "risk_category": "<low|medium|high|critical>",
+      "action": "<PASS|WARN|BLOCK>",
+      "concerns": ["<concern1>", "<concern2>"],
+      "message": "<explanation>",
+      "alternatives": ["<alt1>", "<alt2>"]
+    }
+
+  # Code review prompt for development commands
+  code_review: |
+    Analyze this development command for code quality and security:
+    
+    Command: {command}
+    File context: {file_context}
+    Project: ${project_name}
+    
+    Check for:
+    - Security vulnerabilities
+    - Code quality issues
+    - Best practice violations
+    - Performance implications
+    
+    Provide structured feedback in JSON format.
+
+  # Compliance analysis for regulated environments
+  compliance_analysis: |
+    Review this command for compliance with security policies:
+    
+    Command: {command}
+    Policy level: ${security_strict_mode}
+    Environment: ${environment}
+    
+    Verify compliance with:
+    - Data handling requirements
+    - Access control policies
+    - Audit trail requirements
+    - Change management procedures
+    
+    Report any compliance violations found.
+
+  # Performance impact analysis
+  performance_analysis: |
+    Analyze the potential performance impact of this command:
+    
+    Command: {command}
+    System context: {system_context}
+    
+    Consider:
+    - Resource consumption (CPU, memory, disk, network)
+    - Execution time estimates
+    - System load impact
+    - Potential bottlenecks
+    
+    Provide recommendations for optimization if needed.
+
+  # Educational prompts for learning
+  educational_analysis: |
+    Explain this command in educational terms:
+    
+    Command: {command}
+    User level: {user_level}
+    
+    Provide:
+    - What the command does
+    - Why it might be risky
+    - How to use it safely
+    - Learning resources for better alternatives
+
+# Prompt configuration
+prompt_config:
+  max_tokens: ${ai_max_tokens}
+  temperature: ${ai_temperature}
+  model: "${ai_model}"
+  timeout: ${ai_timeout}
+  
+# Context injection settings
+context:
+  include_environment: true
+  include_project_info: true
+  include_user_history: ${context_include_user_history}
+  include_file_context: ${context_include_file_context} 

@@ -1,0 +1,198 @@
+# AI Command Auditor Python OpenAI Prompts Template
+# Python-specific AI prompts for enhanced analysis
+
+version: "1.0.0"
+template: "${template_type}"
+
+# Python-enhanced prompts
+prompts:
+  # Primary security analysis with Python focus
+  security_analysis: |
+    You are a Python security expert analyzing shell commands and Python code for potential risks.
+    
+    Command to analyze: {command}
+    Context: {context}
+    Environment: ${environment}
+    Project type: Python (${template_type})
+    Project: ${project_name}
+    
+    Please analyze this command/code for Python-specific security issues:
+    1. Code injection vulnerabilities (eval, exec, compile)
+    2. Deserialization attacks (pickle, dill)
+    3. Command injection (subprocess with shell=True, os.system)
+    4. Path traversal and file system attacks
+    5. Package installation security (pip, trusted hosts)
+    6. Import hijacking and dynamic imports
+    7. Virtual environment bypass attempts
+    8. Framework-specific vulnerabilities (Django, Flask, etc.)
+    
+    Rate the security risk on a scale of 1-10 and provide:
+    - Risk score (1-10)
+    - Risk category (low/medium/high/critical)
+    - Python-specific concerns found
+    - Recommended action (allow/warn/block)
+    - Safer Python alternatives if blocking
+    
+    Respond in JSON format:
+    {
+      "risk_score": <1-10>,
+      "risk_category": "<low|medium|high|critical>",
+      "action": "<PASS|WARN|BLOCK>",
+      "concerns": ["<concern1>", "<concern2>"],
+      "message": "<explanation>",
+      "alternatives": ["<alt1>", "<alt2>"],
+      "python_specific": {
+        "code_execution_risk": <boolean>,
+        "deserialization_risk": <boolean>,
+        "import_risk": <boolean>,
+        "package_risk": <boolean>
+      }
+    }
+
+  # Python code review prompt
+  python_code_review: |
+    Analyze this Python command/code for security and quality:
+    
+    Command: {command}
+    File context: {file_context}
+    Project: ${project_name}
+    Virtual environment: {virtual_env}
+    
+    Check for:
+    - Security vulnerabilities specific to Python
+    - Code quality issues (PEP 8, best practices)
+    - Performance implications
+    - Dependency management issues
+    - Framework-specific concerns
+    - Testing and documentation completeness
+    
+    Provide detailed feedback with Python-specific recommendations.
+
+  # Package management analysis
+  package_analysis: |
+    Analyze this Python package management command:
+    
+    Command: {command}
+    Package manager: {package_manager}
+    Requirements file: {requirements_file}
+    Virtual environment: {virtual_env}
+    
+    Evaluate:
+    - Package source security and trust
+    - Version pinning and dependency conflicts
+    - Virtual environment usage
+    - Security vulnerabilities in packages
+    - License compatibility
+    - Installation method security
+    
+    Provide recommendations for secure package management.
+
+  # Virtual environment analysis
+  venv_analysis: |
+    Analyze this virtual environment command:
+    
+    Command: {command}
+    Current environment: {current_env}
+    Project requirements: {requirements}
+    
+    Check for:
+    - Proper virtual environment isolation
+    - System package pollution
+    - Permission and security issues
+    - Environment activation/deactivation
+    - Dependency isolation effectiveness
+    
+    Recommend best practices for Python environment management.
+
+  # Framework-specific analysis
+  framework_analysis: |
+    Analyze this Python framework command:
+    
+    Command: {command}
+    Framework: {framework}
+    Project structure: {project_structure}
+    
+    Framework-specific security checks:
+    - Django: SQL injection, template injection, CSRF, settings security
+    - Flask: Template injection, session security, config management
+    - FastAPI: Input validation, authentication, async security
+    - General: Web security headers, input validation, authentication
+    
+    Provide framework-specific security recommendations.
+
+  # Development workflow analysis
+  dev_workflow_analysis: |
+    Analyze this Python development command:
+    
+    Command: {command}
+    Development stage: {dev_stage}
+    Tools involved: {tools}
+    
+    Evaluate:
+    - Development tool security (pytest, black, pylint, etc.)
+    - CI/CD pipeline integration
+    - Code quality automation
+    - Security testing integration
+    - Documentation generation
+    - Deployment preparation
+    
+    Recommend secure development workflow practices.
+
+  # Educational Python analysis
+  educational_python_analysis: |
+    Explain this Python command for learning purposes:
+    
+    Command: {command}
+    User level: {user_level}
+    Learning objective: {learning_objective}
+    
+    Provide:
+    - What the command does in Python context
+    - Why it might be risky from a Python perspective
+    - How to use it safely in Python development
+    - Better Python alternatives and best practices
+    - Learning resources for Python security
+    - Hands-on examples for safe usage
+
+# Python-specific prompt configuration
+prompt_config:
+  max_tokens: ${ai_max_tokens}
+  temperature: ${ai_temperature}
+  model: "${ai_model}"
+  timeout: ${ai_timeout}
+  
+  # Python-specific model settings
+  python_optimized: true
+  code_analysis_focus: true
+  
+# Context injection settings for Python
+context:
+  include_environment: true
+  include_project_info: true
+  include_user_history: ${context_include_user_history}
+  include_file_context: ${context_include_file_context}
+  
+  # Python-specific context
+  include_virtual_env: true
+  include_requirements: true
+  include_python_version: true
+  include_framework_info: true
+  include_package_info: true
+
+# Python framework detection
+frameworks:
+  django:
+    indicators: ["manage.py", "settings.py", "django", "DJANGO_SETTINGS_MODULE"]
+    security_focus: ["sql_injection", "template_injection", "csrf", "admin_security"]
+    
+  flask:
+    indicators: ["app.py", "flask", "Flask", "from flask import"]
+    security_focus: ["template_injection", "session_security", "config_security"]
+    
+  fastapi:
+    indicators: ["main.py", "fastapi", "FastAPI", "from fastapi import"]
+    security_focus: ["input_validation", "async_security", "auth_security"]
+    
+  pytest:
+    indicators: ["pytest", "test_", "conftest.py", "pytest.ini"]
+    security_focus: ["test_security", "fixture_security", "mock_security"] 

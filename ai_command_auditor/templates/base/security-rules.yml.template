@@ -1,0 +1,102 @@
+# AI Command Auditor Base Security Rules Template
+# This template provides core security rules for all project types
+
+version: "1.0.0"
+template: "${template_type}"
+
+# Core dangerous patterns that apply to all environments
+dangerous_patterns:
+  # File system operations
+  - pattern: 'rm\s+-rf\s+/'
+    severity: critical
+    message: "Attempting to delete root directory"
+    action: block
+    
+  - pattern: 'rm\s+-rf\s+\*'
+    severity: high
+    message: "Recursive deletion with wildcard"
+    action: block
+    
+  - pattern: 'chmod\s+777'
+    severity: high
+    message: "Setting dangerous file permissions (777)"
+    action: warn
+    
+  - pattern: 'sudo\s+chmod\s+777'
+    severity: critical
+    message: "Setting dangerous file permissions with sudo"
+    action: block
+
+  # Network operations
+  - pattern: 'curl.*\|\s*(bash|sh)'
+    severity: high
+    message: "Piping download directly to shell execution"
+    action: block
+    
+  - pattern: 'wget.*\|\s*(bash|sh)'
+    severity: high
+    message: "Piping download directly to shell execution"
+    action: block
+    
+  # Process operations
+  - pattern: ':\(\)\{\s*:\|:&\s*\};:'
+    severity: critical
+    message: "Fork bomb detected"
+    action: block
+    
+  - pattern: 'kill\s+-9\s+1'
+    severity: critical
+    message: "Attempting to kill init process"
+    action: block
+
+  # Data operations
+  - pattern: 'dd\s+if=/dev/zero'
+    severity: high
+    message: "Potential disk space exhaustion"
+    action: warn
+    
+  - pattern: '>\s*/dev/sd[a-z]'
+    severity: critical
+    message: "Writing directly to disk device"
+    action: block
+
+# Suspicious patterns that warrant attention
+suspicious_patterns:
+  - pattern: 'base64.*decode'
+    severity: medium
+    message: "Base64 decoding operation"
+    action: warn
+    
+  - pattern: 'nc\s+-l'
+    severity: medium
+    message: "Starting netcat listener"
+    action: warn
+    
+  - pattern: 'nohup.*&'
+    severity: low
+    message: "Background process creation"
+    action: log
+
+# Command injection patterns
+injection_patterns:
+  - pattern: '.*;.*'
+    severity: medium
+    message: "Command chaining detected"
+    action: warn
+    
+  - pattern: '.*\|\|.*'
+    severity: low
+    message: "Conditional command execution"
+    action: log
+    
+  - pattern: '.*&&.*'
+    severity: low
+    message: "Conditional command execution"
+    action: log
+
+# Security policy configuration
+policy:
+  block_on_critical: ${policy_block_on_critical}
+  warn_on_high: ${policy_warn_on_high}
+  log_all_matches: ${policy_log_all_matches}
+  require_approval_for: ${policy_require_approval_for} 

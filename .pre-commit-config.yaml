@@ -27,30 +27,30 @@ repos:
     hooks:
       - id: black
         language_version: python3
-        files: ^scripts/python/.*\.py$
+        files: ^(ai_command_auditor/.*\.py|scripts/python/.*\.py)$
 
   - repo: https://github.com/pycqa/isort
     rev: 5.13.2
     hooks:
       - id: isort
         args: ["--profile", "black"]
-        files: ^scripts/python/.*\.py$
+        files: ^(ai_command_auditor/.*\.py|scripts/python/.*\.py)$
 
   - repo: https://github.com/pycqa/pylint
     rev: v3.3.7
     hooks:
       - id: pylint
-        files: ^scripts/python/.*\.py$
-        additional_dependencies: [pyyaml, openai, requests]
+        files: ^(ai_command_auditor/.*\.py|scripts/python/.*\.py)$
+        additional_dependencies: [pyyaml, openai, requests, click, colorama, jsonschema]
         args: ["--exit-zero", "--reports=no"]
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.16.0
+    rev: v1.8.0
     hooks:
       - id: mypy
-        files: ^scripts/python/.*\.py$
-        additional_dependencies: [types-PyYAML, types-requests]
-        args: ["--ignore-missing-imports", "--no-strict-optional"]
+        files: ^(ai_command_auditor/.*\.py|scripts/python/.*\.py)$
+        additional_dependencies: [types-PyYAML, types-requests, click, colorama, jsonschema]
+        args: ["--ignore-missing-imports", "--no-strict-optional", "--explicit-package-bases"]
 
   # Local hooks
   - repo: local
@@ -59,7 +59,7 @@ repos:
         name: Comprehensive Linting Check
         entry: ./scripts/hooks/pre-commit.sh
         language: system
-        files: ^(scripts/|\.github/workflows/|.*\.md|.*\.yml|.*\.yaml).*$
+        files: ^(scripts/|ai_command_auditor/|\.github/workflows/|.*\.md|.*\.yml|.*\.yaml).*$
         pass_filenames: false
 
   # Bash/Shell linting

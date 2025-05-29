@@ -44,7 +44,7 @@ jobs:
 
     - name: Run isort (Import Sorting)
       run: |
-        isort --check-only --diff scripts/python/
+        isort --check-only --diff --profile=black scripts/python/
 
     - name: Run Pylint (Code Quality)
       run: |

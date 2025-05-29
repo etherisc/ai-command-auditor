@@ -12,3 +12,6 @@ pyyaml>=6.0
 
 # Command line interface (optional - can use built-in argparse instead)
 click>=8.0.0
+
+# OpenAI API client for AI-based command analysis
+openai>=1.0.0

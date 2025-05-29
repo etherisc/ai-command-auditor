@@ -1,18 +1,26 @@
 """
-Core functionality for AI Command Auditor.
+AI Command Auditor - Core Module
 
-This module provides core utilities, base classes, and common functionality
-used throughout the AI Command Auditor system.
+This module provides core functionality for the AI Command Auditor.
+It includes configuration management, security validation, and OpenAI integration.
 """
 
-from .utils import *
-from .config import *
-from .logging import *
+from .config import Config, get_config, setup_logging
+from .security import (
+    CommandValidator,
+    SecurityError,
+    sanitize_command,
+    validate_command,
+)
 
-__version__ = "0.1.0"
+__version__ = "2.0.0"
 
 __all__ = [
-    "utils",
-    "config", 
-    "logging"
-] 
+    "Config",
+    "get_config",
+    "setup_logging",
+    "CommandValidator",
+    "SecurityError",
+    "sanitize_command",
+    "validate_command",
+]

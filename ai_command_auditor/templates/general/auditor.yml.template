@@ -1,0 +1,46 @@
+# AI Command Auditor General Configuration Template
+# Language-agnostic configuration suitable for any project type
+
+version: "1.0.0"
+template: "${template_type}"
+project_name: "${project_name}"
+
+# AI Configuration - Balanced settings for general use
+ai:
+  model: "${ai_model}"
+  timeout: ${ai_timeout}
+  max_retries: ${ai_max_retries}
+  temperature: ${ai_temperature}
+  max_tokens: ${ai_max_tokens}
+
+# Security Configuration - General security settings
+security:
+  enabled: true
+  max_command_length: ${security_max_command_length}
+  allow_multiline: ${security_allow_multiline}
+  strict_mode: ${security_strict_mode}
+  blocked_commands: ${security_blocked_commands}
+  
+# Logging Configuration
+logging:
+  level: "${logging_level}"
+  file: "${logging_file}"
+  format: "${logging_format}"
+  
+# Validation Configuration - Standard validation settings
+validation:
+  enable_ai_check: ${validation_enable_ai_check}
+  enable_rule_check: ${validation_enable_rule_check}
+  require_context: ${validation_require_context}
+  cache_results: ${validation_cache_results}
+  
+# Integration Configuration
+integration:
+  git_hooks: ${integration_git_hooks}
+  ci_integration: ${integration_ci_integration}
+  pre_commit: ${integration_pre_commit}
+  pre_push: ${integration_pre_push}
+
+# Environment Configuration
+environment: "${environment}"
+team_config: "${team_config}" 

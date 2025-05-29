@@ -1,0 +1,223 @@
+# AI Command Auditor Configuration
+
+This directory contains the AI Command Auditor configuration for the **${project_name}** project.
+
+## Template Information
+
+- **Template Type**: ${template_type}
+- **Version**: 1.0.0
+- **Environment**: ${environment}
+- **Created**: $(date)
+
+## Directory Structure
+
+```
+.ai-auditor/
+├── config/
+│   ├── auditor.yml              # Main configuration
+│   ├── rules/
+│   │   └── security-rules.yml   # Security validation rules
+│   └── prompts/
+│       └── openai-prompts.yml   # AI validation prompts
+├── hooks/                       # Git hook scripts
+├── workflows/                   # GitHub Actions templates
+└── README.md                   # This file
+```
+
+## Configuration Files
+
+### Main Configuration (`config/auditor.yml`)
+
+Controls the core behavior of the AI Command Auditor:
+
+- **AI Settings**: Model configuration, timeouts, and retry logic
+- **Security Settings**: Command length limits, multiline handling, strict mode
+- **Logging**: Log levels, output formats, and file locations
+- **Validation**: Rule checking, AI analysis, and caching options
+- **Integration**: Git hooks, CI/CD pipeline integration
+
+### Security Rules (`config/rules/security-rules.yml`)
+
+Defines patterns for dangerous commands that should be blocked or flagged:
+
+- **Dangerous Patterns**: Critical security risks that are blocked
+- **Suspicious Patterns**: Commands that warrant attention
+- **Injection Patterns**: Common command injection techniques
+- **Policy Configuration**: Action thresholds and approval workflows
+
+Each rule specifies:
+- `pattern`: Regular expression to match commands
+- `severity`: critical, high, medium, low
+- `action`: block, warn, log
+- `message`: Human-readable explanation
+
+### AI Prompts (`config/prompts/openai-prompts.yml`)
+
+Templates for AI-powered command analysis:
+
+- **Security Analysis**: Primary threat assessment
+- **Code Review**: Development command validation
+- **Compliance Analysis**: Policy compliance checking
+- **Performance Analysis**: Resource impact assessment
+- **Educational Analysis**: Learning-focused explanations
+
+## Usage
+
+### Command Validation
+
+Test commands before execution:
+
+```bash
+# Test a single command
+ai-auditor check-command "rm -rf temp/"
+
+# Test with additional context
+ai-auditor check-command "npm install package" --context "Installing dependencies"
+
+# Get JSON output for automation
+ai-auditor check-command "sudo systemctl restart service" --json
+```
+
+### Setup and Maintenance
+
+```bash
+# Validate your configuration
+ai-auditor validate-setup
+
+# Update configuration templates
+ai-auditor update-config
+
+# Reinstall git hooks
+ai-auditor setup-hooks --force
+```
+
+### Integration
+
+The AI Command Auditor integrates with:
+
+- **Git Hooks**: Validates commands in commit messages and scripts
+- **CI/CD Pipelines**: Analyzes deployment and build commands
+- **Development Workflow**: Real-time validation during development
+
+## Customization
+
+### Adding Custom Rules
+
+Edit `config/rules/security-rules.yml` to add project-specific patterns:
+
+```yaml
+dangerous_patterns:
+  - pattern: 'your-custom-pattern'
+    severity: high
+    message: "Description of the risk"
+    action: warn
+```
+
+### Modifying AI Prompts
+
+Customize `config/prompts/openai-prompts.yml` for your use case:
+
+```yaml
+prompts:
+  custom_analysis: |
+    Your custom prompt template here.
+    Command: {command}
+    Context: {context}
+```
+
+### Environment-Specific Configuration
+
+For different environments (dev, staging, prod), create separate configurations:
+
+```bash
+# Initialize for production with strict settings
+ai-auditor init --template security --force
+
+# Use environment-specific config directory
+ai-auditor --config-dir .ai-auditor-prod validate-setup
+```
+
+## Security Considerations
+
+### API Key Management
+
+The AI Command Auditor requires an OpenAI API key:
+
+```bash
+# Set via environment variable (recommended)
+export OPENAI_API_KEY="your-api-key-here"
+
+# Or configure in your shell profile
+echo 'export OPENAI_API_KEY="your-key"' >> ~/.bashrc
+```
+
+**Important**: Never commit API keys to version control.
+
+### Data Privacy
+
+- Commands are sent to OpenAI for analysis
+- Consider using local models for sensitive environments
+- Review OpenAI's data usage policies
+- Use environment variables for sensitive context
+
+### Access Control
+
+- Restrict write access to `.ai-auditor/` directory
+- Use team configurations for shared settings
+- Implement approval workflows for configuration changes
+
+## Troubleshooting
+
+### Common Issues
+
+1. **API Key Not Found**
+   ```bash
+   export OPENAI_API_KEY="your-key"
+   ai-auditor validate-setup
+   ```
+
+2. **Git Hooks Not Working**
+   ```bash
+   ai-auditor setup-hooks --force
+   ```
+
+3. **Template Validation Errors**
+   ```bash
+   ai-auditor validate-setup --verbose
+   ```
+
+### Debug Mode
+
+Enable verbose logging for troubleshooting:
+
+```bash
+ai-auditor --verbose check-command "problematic command"
+```
+
+### Log Files
+
+Check logs for detailed error information:
+
+```bash
+# Default log location
+tail -f ${logging_file}
+
+# Or check system logs
+journalctl -u ai-command-auditor
+```
+
+## Support
+
+For help and support:
+
+- Documentation: [AI Command Auditor Wiki](https://github.com/etherisc/ai-command-auditor/wiki)
+- Issues: [GitHub Issues](https://github.com/etherisc/ai-command-auditor/issues)
+- Discussions: [GitHub Discussions](https://github.com/etherisc/ai-command-auditor/discussions)
+
+## Template: ${template_type}
+
+This configuration was created using the **${template_type}** template, which includes:
+
+${template_description}
+
+For template-specific documentation and examples, see the [${template_type} template guide](https://github.com/etherisc/ai-command-auditor/wiki/Templates/${template_type}). 

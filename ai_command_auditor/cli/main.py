@@ -19,6 +19,7 @@ import click
 from colorama import Fore, Style, init
 
 from ..core.config import AuditorConfig, get_config, setup_logging
+from ..core.templates import TemplateEngine
 
 # Initialize colorama for cross-platform colored output
 init()
@@ -93,9 +94,30 @@ def cli(ctx: click.Context, config_dir: Optional[str], verbose: bool) -> None:
 )
 @click.option("--config-dir", help="Custom config directory (default: .ai-auditor)")
 @click.option("--force", is_flag=True, help="Overwrite existing configuration")
+@click.option(
+    "--environment",
+    "-e",
+    type=click.Choice(["development", "staging", "production"]),
+    default="development",
+    help="Environment type for configuration",
+)
+@click.option(
+    "--security-level",
+    "-s",
+    type=click.Choice(["basic", "standard", "strict"]),
+    default="standard",
+    help="Security level for validation rules",
+)
+@click.option("--team-config", help="Team configuration identifier")
 @click.pass_context
 def init_command(
-    ctx: click.Context, template: str, config_dir: Optional[str], force: bool
+    ctx: click.Context,
+    template: str,
+    config_dir: Optional[str],
+    force: bool,
+    environment: str,
+    security_level: str,
+    team_config: Optional[str],
 ) -> None:
     """Initialize AI Command Auditor in the current project."""
     try:
@@ -103,9 +125,34 @@ def init_command(
         config_directory = config_dir or ctx.obj.get("config_dir")
 
         print_info(f"Initializing AI Command Auditor with {template} template...")
+        print_info(f"Environment: {environment}, Security level: {security_level}")
+
+        # Initialize template engine
+        template_engine = TemplateEngine()
+
+        # Get available templates and validate choice
+        available_templates = template_engine.get_available_templates()
+        if template not in available_templates:
+            # Fall back to 'general' if the specific template doesn't exist yet
+            if "general" in available_templates:
+                print_warning(
+                    f"Template '{template}' not available yet, using 'general' template"
+                )
+                template = "general"
+            elif "base" in available_templates:
+                print_warning(
+                    f"Template '{template}' not available yet, using 'base' template"
+                )
+                template = "base"
+            else:
+                print_error(
+                    f"No templates available. Expected templates: {available_templates}"
+                )
+                sys.exit(1)
 
         # Create configuration
         config = AuditorConfig(config_dir=config_directory)
+        project_dir = Path.cwd()
         auditor_dir = config.get_config_dir()
 
         # Check if already initialized
@@ -114,23 +161,65 @@ def init_command(
             print_info("Use --force to overwrite existing configuration")
             return
 
-        # Create directory structure
-        directories = [
-            auditor_dir / "config" / "rules",
-            auditor_dir / "config" / "prompts",
-            auditor_dir / "hooks",
-            auditor_dir / "workflows",
-        ]
+        # Get project name from current directory
+        project_name = project_dir.name
 
-        for directory in directories:
-            directory.mkdir(parents=True, exist_ok=True)
-            print_success(f"Created directory: {directory}")
+        # Apply template using the new template engine
+        print_info(f"Applying {template} template...")
 
-        # Create basic configuration files
-        _create_config_files(auditor_dir, template)
+        # Custom variables for template
+        custom_variables = {
+            "project_name": project_name,
+            "environment": environment,
+            "security_level": security_level,
+        }
 
-        print_success(f"AI Command Auditor initialized successfully!")
-        print_info(f"Configuration directory: {auditor_dir}")
+        if team_config:
+            custom_variables["team_config"] = team_config
+
+        # Get default variables with environment and security level
+        variables = template_engine.get_default_variables(
+            template_type=template,
+            project_name=project_name,
+            environment=environment,
+            security_level=security_level,
+        )
+        variables.update(custom_variables)
+
+        # Apply the template
+        results = template_engine.apply_template(
+            project_dir=project_dir,
+            template_type=template,
+            project_name=project_name,
+            custom_variables=variables,
+        )
+
+        # Report results
+        if results["files_created"]:
+            print_success(f"AI Command Auditor initialized successfully!")
+            print_info(f"Configuration directory: {auditor_dir}")
+            print_info(f"Template applied: {template}")
+            print_info(f"Environment: {environment}")
+            print_info(f"Security level: {security_level}")
+            if team_config:
+                print_info(f"Team config: {team_config}")
+            print_info(f"Files created: {len(results['files_created'])}")
+
+            for file_info in results["files_created"]:
+                print_success(f"Created: {file_info['file']}")
+
+        if results["files_failed"]:
+            print_warning(
+                f"Some files could not be created: {len(results['files_failed'])}"
+            )
+            for file_info in results["files_failed"]:
+                print_error(f"Failed: {file_info['file']} - {file_info['errors']}")
+
+        if results["validation_errors"]:
+            print_warning("Template validation warnings:")
+            for error in results["validation_errors"]:
+                print_warning(f"  - {error}")
+
         print_info("Next steps:")
         print_info("  1. Run 'ai-auditor setup-hooks' to install git hooks")
         print_info("  2. Customize rules in .ai-auditor/config/rules/")
@@ -753,6 +842,101 @@ with your project.
     with open(readme_file, "w", encoding="utf-8") as f:
         f.write(readme_content)
     print_success(f"{action} README: {readme_file}")
+
+
+@cli.command()
+@click.option("--template", help="Test specific template (default: all)")
+@click.option(
+    "--environment-tests", is_flag=True, help="Run environment-specific tests"
+)
+@click.pass_context
+def test_templates(
+    ctx: click.Context, template: Optional[str], environment_tests: bool
+) -> None:
+    """Test and validate template functionality."""
+    try:
+        print_info("Testing AI Command Auditor templates...")
+
+        template_engine = TemplateEngine()
+
+        if template:
+            # Test specific template
+            print_info(f"Testing template: {template}")
+
+            # Basic structure validation
+            is_valid, errors = template_engine.validate_template_structure(template)
+            if is_valid:
+                print_success(f"Template '{template}' structure is valid")
+            else:
+                print_error(f"Template '{template}' structure validation failed:")
+                for error in errors:
+                    print_error(f"  - {error}")
+                return
+
+            # Environment tests if requested
+            if environment_tests:
+                print_info(f"Running environment tests for '{template}'...")
+                env_results = template_engine.test_template_with_environments(template)
+
+                if env_results["all_passed"]:
+                    print_success(f"All environment tests passed for '{template}'")
+                else:
+                    print_warning(f"Some environment tests failed for '{template}':")
+
+                    for test in env_results["environment_tests"]:
+                        if not test["passed"]:
+                            print_error(
+                                f"  Environment '{test['environment']}' failed: {test['errors']}"
+                            )
+
+                    for test in env_results["security_level_tests"]:
+                        if not test["passed"]:
+                            print_error(
+                                f"  Security level '{test['security_level']}' failed: {test['errors']}"
+                            )
+        else:
+            # Test all templates
+            print_info("Testing all available templates...")
+            results = template_engine.validate_all_templates()
+
+            # Print summary
+            summary = results["summary"]
+            print_info(f"Template validation summary:")
+            print_info(f"  Total templates: {summary['total_templates']}")
+            print_info(f"  Passed: {summary['passed']}")
+            print_info(f"  Failed: {summary['failed']}")
+            print_info(f"  Success rate: {summary['success_rate']:.1%}")
+
+            # Print details for failed templates
+            if results["templates_failed"]:
+                print_warning("Failed templates:")
+                for failed_template in results["templates_failed"]:
+                    print_error(f"  {failed_template['template']}:")
+                    for error in failed_template["structure_errors"]:
+                        print_error(f"    Structure: {error}")
+                    for error in failed_template["render_errors"]:
+                        print_error(f"    Rendering: {error}")
+
+            # Print passed templates
+            if results["templates_passed"]:
+                print_success("Passed templates:")
+                for passed_template in results["templates_passed"]:
+                    print_success(f"  ✓ {passed_template['template']}")
+
+            if summary["success_rate"] == 1.0:
+                print_success("All templates passed validation!")
+            else:
+                print_warning(
+                    "Some templates failed validation. Check the details above."
+                )
+
+    except Exception as e:
+        print_error(f"Failed to test templates: {e}")
+        if ctx.obj.get("verbose"):
+            import traceback
+
+            traceback.print_exc()
+        sys.exit(1)
 
 
 def main() -> None:

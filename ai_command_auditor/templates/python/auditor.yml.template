@@ -1,0 +1,70 @@
+# AI Command Auditor Python Configuration Template
+# Specialized configuration for Python development projects
+
+version: "1.0.0"
+template: "${template_type}"
+project_name: "${project_name}"
+
+# AI Configuration - Optimized for Python analysis
+ai:
+  model: "${ai_model}"
+  timeout: ${ai_timeout}
+  max_retries: ${ai_max_retries}
+  temperature: ${ai_temperature}
+  max_tokens: ${ai_max_tokens}
+
+# Security Configuration - Python-specific security settings
+security:
+  enabled: true
+  max_command_length: ${security_max_command_length}
+  allow_multiline: ${security_allow_multiline}
+  strict_mode: ${security_strict_mode}
+  blocked_commands: ${security_blocked_commands}
+  
+  # Python-specific security settings
+  python_specific: true
+  check_imports: true
+  validate_pip_commands: true
+  virtual_env_detection: true
+  
+# Logging Configuration
+logging:
+  level: "${logging_level}"
+  file: "${logging_file}"
+  format: "${logging_format}"
+  
+# Validation Configuration - Enhanced for Python
+validation:
+  enable_ai_check: ${validation_enable_ai_check}
+  enable_rule_check: ${validation_enable_rule_check}
+  require_context: ${validation_require_context}
+  cache_results: ${validation_cache_results}
+  
+  # Python-specific validation
+  check_syntax: true
+  validate_requirements: true
+  check_virtual_env: true
+  
+# Integration Configuration
+integration:
+  git_hooks: ${integration_git_hooks}
+  ci_integration: ${integration_ci_integration}
+  pre_commit: ${integration_pre_commit}
+  pre_push: ${integration_pre_push}
+  
+  # Python tool integration
+  pytest_integration: true
+  black_integration: true
+  pylint_integration: true
+  mypy_integration: true
+
+# Python Development Configuration
+python:
+  version_check: true
+  virtual_env_required: false
+  package_managers: ["pip", "poetry", "conda", "pipenv"]
+  frameworks: ["django", "flask", "fastapi", "pytest"]
+  
+# Environment Configuration
+environment: "${environment}"
+team_config: "${team_config}" 

@@ -71,11 +71,11 @@ if [ "$PYTHON_FILES" -gt 0 ]; then
     echo
 
     print_section "Python Import Sorting (isort)"
-    if isort --check-only --diff scripts/python/; then
-        print_success "isort check passed"
+    if isort --check-only --diff --profile=black scripts/python/; then
+        print_success "isort import sorting check passed"
     else
         print_error "isort check failed"
-        echo "Run: isort scripts/python/ to fix import sorting"
+        echo "Run: isort --profile=black scripts/python/ to fix import sorting"
         CHECKS_FAILED=1
     fi
     echo
@@ -141,7 +141,7 @@ else
     echo
     echo "Quick fixes:"
     echo "  - Format Python code: black scripts/python/"
-    echo "  - Sort imports: isort scripts/python/"
+    echo "  - Sort imports: isort --profile=black scripts/python/"
     echo "  - Fix bash issues: follow shellcheck suggestions"
     exit 1
 fi

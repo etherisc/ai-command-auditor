@@ -91,10 +91,10 @@ fi
 
 # isort import sorting check (exactly as CI does it)
 print_section "isort Import Sorting"
-if isort --check-only --diff scripts/python/; then
+if isort --check-only --diff --profile=black scripts/python/; then
     print_success "isort import sorting check passed"
 else
-    print_error "isort import sorting check failed - run 'isort scripts/python/' to fix"
+    print_error "isort import sorting check failed - run 'isort --profile=black scripts/python/' to fix"
     TESTS_FAILED=1
 fi
 

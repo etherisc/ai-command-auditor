@@ -8,6 +8,7 @@ baseurl: "/ai-command-auditor"
 author:
   name: "Etherisc"
   bio: "Decentralized insurance protocols and development tools"
+  avatar: "/assets/images/avatar.jpg"
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
@@ -20,7 +21,9 @@ minimal_mistakes_skin: "default"
 # Reading settings
 markdown: kramdown
 highlighter: rouge
-timezone: UTC
+lsi: false
+excerpt_separator: "\n\n"
+incremental: false
 
 # Plugins
 plugins:
@@ -50,91 +53,59 @@ social:
   links:
     - "https://github.com/etherisc"
 
-# Navigation
-header_pages:
-  - installation/index.md
-  - configuration/index.md
-  - api/index.md
-  - examples/index.md
-  - support/index.md
-
 # Main navigation
 main:
   - title: "Installation"
-    url: /installation/
+    url: /installation
   - title: "Configuration"
-    url: /configuration/
+    url: /configuration
   - title: "API Reference"
-    url: /api/
+    url: /api
   - title: "Examples"
-    url: /examples/
+    url: /examples
   - title: "Support"
-    url: /support/
+    url: /support
+  - title: "GitHub"
+    url: "https://github.com/etherisc/ai-command-auditor"
+
+# Sidebar navigation for docs
+sidebar:
+  nav: "docs"
 
 # Documentation navigation
 docs:
   - title: Getting Started
     children:
-      - title: "Quick Start"
-        url: /installation/
+      - title: "Installation Guide"
+        url: /installation
       - title: "Installation Methods"
-        url: /installation/methods/
-      - title: "System Requirements"
-        url: /installation/requirements/
+        url: /installation/methods
 
   - title: Configuration
     children:
       - title: "Configuration Overview"
-        url: /configuration/
+        url: /configuration
       - title: "Security Rules"
-        url: /configuration/security-rules/
+        url: /configuration/security-rules
       - title: "AI Prompts"
-        url: /configuration/ai-prompts/
-      - title: "Templates"
-        url: /configuration/templates/
-      - title: "Git Hooks"
-        url: /configuration/git-hooks/
+        url: /configuration/ai-prompts
 
   - title: API Reference
     children:
       - title: "CLI Commands"
-        url: /api/cli/
+        url: /api/cli
       - title: "Python API"
-        url: /api/python/
-      - title: "Integration Patterns"
-        url: /api/integration/
-      - title: "Developer Guide"
-        url: /api/developer/
+        url: /api/python
 
   - title: Examples
     children:
       - title: "Getting Started Tutorial"
-        url: /examples/tutorial/
-      - title: "Python Projects"
-        url: /examples/python/
-      - title: "Node.js Projects"
-        url: /examples/nodejs/
-      - title: "DevOps Integration"
-        url: /examples/devops/
-      - title: "Advanced Examples"
-        url: /examples/advanced/
+        url: /examples/tutorial
 
   - title: Support
     children:
-      - title: "Troubleshooting"
-        url: /support/troubleshooting/
-      - title: "FAQ"
-        url: /support/faq/
-      - title: "Community"
-        url: /support/community/
-      - title: "Contributing"
-        url: /support/contributing/
-
-# Collections
-collections:
-  docs:
-    output: true
-    permalink: /:collection/:name/
+      - title: "Support Overview"
+        url: /support
 
 # Defaults
 defaults:
@@ -149,27 +120,36 @@ defaults:
       comments: false
       share: true
       related: true
+      sidebar:
+        nav: "docs"
 
-  # _pages
+  # _pages (all markdown files)
   - scope:
       path: ""
       type: pages
     values:
       layout: single
       author_profile: false
-
-  # _docs
-  - scope:
-      path: ""
-      type: docs
-    values:
-      layout: single
-      read_time: false
-      author_profile: false
-      share: false
-      comments: false
       sidebar:
         nav: "docs"
+
+# Pagination
+paginate: 5
+paginate_path: /page:num/
+
+# Archives
+category_archive:
+  type: liquid
+  path: /categories/
+tag_archive:
+  type: liquid
+  path: /tags/
+
+# HTML Compression
+compress_html:
+  clippings: all
+  ignore:
+    envs: development
 
 # Exclude from processing
 exclude:

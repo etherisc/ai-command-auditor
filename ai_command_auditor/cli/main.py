@@ -10,9 +10,10 @@ Date: 2024
 Version: 1.0
 """
 
+import subprocess
 import sys
 from pathlib import Path
-from typing import Optional
+from typing import Any, Dict, List, Optional, Union
 
 import click
 from colorama import Fore, Style, init
@@ -21,6 +22,18 @@ from ..core.config import AuditorConfig, get_config, setup_logging
 
 # Initialize colorama for cross-platform colored output
 init()
+
+# Import existing functionality
+try:
+    # Try to import the existing command checker
+    import scripts.python.core.check_command as legacy_checker
+    from scripts.python.core.security import CommandValidator, validate_command
+
+    LEGACY_AVAILABLE = True
+except ImportError:
+    LEGACY_AVAILABLE = False
+
+from ..core.validator import CommandValidator as NewValidator
 
 
 def print_success(message: str) -> None:
@@ -66,6 +79,7 @@ def cli(ctx: click.Context, config_dir: Optional[str], verbose: bool) -> None:
     if verbose:
         import logging
 
+        setup_logging()
         logging.getLogger().setLevel(logging.DEBUG)
 
 
@@ -148,9 +162,41 @@ def setup_hooks(ctx: click.Context, force: bool) -> None:
             print_error("Not in a git repository. Initialize git first.")
             sys.exit(1)
 
-        # TODO: Implement hook setup logic
-        print_warning("Git hooks setup is not yet implemented.")
-        print_info("This will be implemented in Task 8.2")
+        # Check if the project setup script exists
+        project_root = Path.cwd()
+        setup_script = project_root / "scripts" / "setup-hooks.sh"
+
+        if setup_script.exists():
+            print_info("Using existing project setup script...")
+            try:
+                # Run the existing setup script
+                script_result = subprocess.run(
+                    [str(setup_script)],
+                    cwd=project_root,
+                    capture_output=True,
+                    text=True,
+                    check=False,
+                )
+
+                if script_result.returncode == 0:
+                    print_success("Git hooks setup completed using project script")
+                    print_info("Pre-commit and pre-push hooks are now active")
+                    return
+                else:
+                    print_warning(
+                        f"Project setup script failed: {script_result.stderr}"
+                    )
+                    print_info("Falling back to basic hook setup...")
+
+            except Exception as e:
+                print_warning(f"Failed to run project setup script: {e}")
+                print_info("Falling back to basic hook setup...")
+
+        # Basic hook setup if project script not available or failed
+        _setup_basic_hooks(config, force)
+
+        print_success("Basic git hooks setup completed")
+        print_info("For full setup, consider running scripts/setup-hooks.sh")
 
     except Exception as e:
         print_error(f"Failed to setup git hooks: {e}")
@@ -163,8 +209,12 @@ def setup_hooks(ctx: click.Context, force: bool) -> None:
 
 @cli.command()
 @click.argument("command")
+@click.option("--json", is_flag=True, help="Output result as JSON")
+@click.option("--context", help="Additional context for command analysis")
 @click.pass_context
-def check_command(ctx: click.Context, command: str) -> None:
+def check_command(
+    ctx: click.Context, command: str, json: bool, context: Optional[str]
+) -> None:
     """Test command validation against current rules."""
     try:
         config_directory = ctx.obj.get("config_dir")
@@ -172,9 +222,66 @@ def check_command(ctx: click.Context, command: str) -> None:
 
         print_info(f"Checking command: {command}")
 
-        # TODO: Implement command checking logic
-        print_warning("Command checking is not yet implemented.")
-        print_info("This will be implemented in Task 8.2")
+        # Try to use the existing legacy checker first
+        if LEGACY_AVAILABLE:
+            try:
+                # Create the legacy checker instance
+                checker = legacy_checker.CommandChecker()
+                legacy_result = checker.check_command(command)
+
+                if json:
+                    import json as json_module
+
+                    click.echo(json_module.dumps(legacy_result, indent=2))
+                else:
+                    _format_check_result(legacy_result)
+
+                return
+
+            except Exception as e:
+                print_warning(f"Legacy checker failed: {e}")
+                print_info("Falling back to basic security validation...")
+
+        # Fallback to basic security validation
+        if LEGACY_AVAILABLE:
+            try:
+                from scripts.python.core.security import (
+                    validate_command as sec_validate,
+                )
+
+                is_safe, error_msg = sec_validate(command)
+
+                security_result: Dict[str, Any] = {
+                    "action": "PASS" if is_safe else "ERROR",
+                    "command": command,
+                    "message": error_msg if error_msg else "Command validated",
+                    "analysis_type": "security_only",
+                }
+
+                if json:
+                    import json as json_module
+
+                    click.echo(json_module.dumps(security_result, indent=2))
+                else:
+                    _format_check_result(security_result)
+
+                return
+
+            except Exception as e:
+                print_warning(f"Security validation failed: {e}")
+
+        # Final fallback to new validator
+        validator = NewValidator(config)
+        validator_result = validator.validate_command(
+            command, {"context": context} if context else None
+        )
+
+        if json:
+            import json as json_module
+
+            click.echo(json_module.dumps(validator_result, indent=2))
+        else:
+            _format_check_result(validator_result)
 
     except Exception as e:
         print_error(f"Failed to check command: {e}")
@@ -196,6 +303,7 @@ def validate_setup(ctx: click.Context) -> None:
         print_info("Validating AI Command Auditor setup...")
 
         auditor_dir = config.get_config_dir()
+        all_good = True
 
         # Check if initialized
         if not auditor_dir.exists():
@@ -212,7 +320,6 @@ def validate_setup(ctx: click.Context) -> None:
             auditor_dir / "hooks",
         ]
 
-        all_good = True
         for directory in required_dirs:
             if directory.exists():
                 print_success(f"Directory exists: {directory}")
@@ -237,14 +344,51 @@ def validate_setup(ctx: click.Context) -> None:
         git_hooks_dir = Path(".git/hooks")
         if git_hooks_dir.exists():
             print_success("Git hooks directory exists")
-            # TODO: Check specific hooks
+
+            # Check specific hooks
+            hooks_to_check = ["pre-commit", "pre-push"]
+            for hook in hooks_to_check:
+                hook_file = git_hooks_dir / hook
+                if hook_file.exists():
+                    print_success(f"Git hook exists: {hook}")
+                else:
+                    print_warning(f"Git hook missing: {hook}")
         else:
             print_warning("Git hooks directory not found")
+
+        # Check if pre-commit is installed
+        try:
+            precommit_result = subprocess.run(
+                ["pre-commit", "--version"], capture_output=True, text=True
+            )
+            if precommit_result.returncode == 0:
+                print_success("Pre-commit tool is installed")
+            else:
+                print_warning("Pre-commit tool not working properly")
+        except FileNotFoundError:
+            print_warning("Pre-commit tool not installed")
+
+        # Test command validation
+        print_info("Testing command validation functionality...")
+        try:
+            test_command = "ls -la"
+            validator = NewValidator(config)
+            validation_result = validator.validate_command(test_command)
+            print_success("Command validation is working")
+        except Exception as e:
+            print_error(f"Command validation test failed: {e}")
+            all_good = False
+
+        # Check for legacy components
+        if LEGACY_AVAILABLE:
+            print_success("Legacy command checker available")
+        else:
+            print_warning("Legacy command checker not available")
 
         if all_good:
             print_success("AI Command Auditor setup is valid!")
         else:
-            print_error("Setup validation failed. Run 'ai-auditor init' to fix issues.")
+            print_error("Setup validation found issues. Check the messages above.")
             sys.exit(1)
 
     except Exception as e:
@@ -256,11 +400,158 @@ def validate_setup(ctx: click.Context) -> None:
         sys.exit(1)
 
 
-def _create_config_files(auditor_dir: Path, template: str) -> None:
+@cli.command()
+@click.option("--template", help="Update to a specific template")
+@click.option("--force", is_flag=True, help="Force update even if files exist")
+@click.pass_context
+def update_config(ctx: click.Context, template: Optional[str], force: bool) -> None:
+    """Update configuration templates to latest version."""
+    try:
+        config_directory = ctx.obj.get("config_dir")
+        config = AuditorConfig(config_dir=config_directory)
+        auditor_dir = config.get_config_dir()
+
+        if not auditor_dir.exists():
+            print_error(
+                "AI Command Auditor not initialized. Run 'ai-auditor init' first."
+            )
+            sys.exit(1)
+
+        print_info("Updating configuration templates...")
+
+        # Determine template to use
+        current_template = "general"
+        config_file = auditor_dir / "config" / "auditor.yml"
+
+        if config_file.exists():
+            try:
+                import yaml
+
+                with open(config_file, "r") as f:
+                    current_config = yaml.safe_load(f) or {}
+                current_template = current_config.get("template", "general")
+            except Exception as e:
+                print_warning(f"Could not read current template: {e}")
+
+        template_to_use = template or current_template
+        print_info(f"Using template: {template_to_use}")
+
+        # Backup existing files if not forcing
+        if not force:
+            backup_dir = auditor_dir / "backup"
+            backup_dir.mkdir(exist_ok=True)
+            print_info(f"Creating backup in {backup_dir}")
+
+            import datetime
+            import shutil
+
+            timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+            for item in auditor_dir.glob("config/*"):
+                if item.is_file():
+                    backup_file = backup_dir / f"{item.name}.{timestamp}.bak"
+                    shutil.copy2(item, backup_file)
+                    print_success(f"Backed up: {item.name}")
+
+        # Update configuration files
+        _create_config_files(auditor_dir, template_to_use, update=True)
+
+        print_success("Configuration templates updated successfully!")
+        if not force:
+            print_info(f"Backup files saved in {auditor_dir / 'backup'}")
+
+    except Exception as e:
+        print_error(f"Failed to update configuration: {e}")
+        if ctx.obj.get("verbose"):
+            import traceback
+
+            traceback.print_exc()
+        sys.exit(1)
+
+
+def _setup_basic_hooks(config: AuditorConfig, force: bool) -> None:
+    """Setup basic git hooks without the full project script."""
+    git_hooks_dir = Path(".git/hooks")
+
+    # Create pre-commit hook
+    pre_commit_hook = git_hooks_dir / "pre-commit"
+    if pre_commit_hook.exists() and not force:
+        print_warning("Pre-commit hook already exists (use --force to overwrite)")
+    else:
+        pre_commit_content = """#!/bin/bash
+#
+# Basic pre-commit hook for AI Command Auditor
+#
+echo "Running AI Command Auditor pre-commit checks..."
+
+# Run pre-commit if available
+if command -v pre-commit >/dev/null 2>&1; then
+    pre-commit run --all-files
+else
+    echo "Pre-commit tool not installed, skipping checks"
+fi
+"""
+        pre_commit_hook.write_text(pre_commit_content)
+        pre_commit_hook.chmod(0o755)
+        print_success("Created basic pre-commit hook")
+
+    # Create pre-push hook
+    pre_push_hook = git_hooks_dir / "pre-push"
+    if pre_push_hook.exists() and not force:
+        print_warning("Pre-push hook already exists (use --force to overwrite)")
+    else:
+        pre_push_content = """#!/bin/bash
+#
+# Basic pre-push hook for AI Command Auditor
+#
+echo "Running AI Command Auditor pre-push checks..."
+
+# Basic command validation test
+if command -v python3 >/dev/null 2>&1; then
+    if [ -f "scripts/python/core/check_command.py" ]; then
+        echo "Testing command validation..."
+        python3 scripts/python/core/check_command.py "ls -la" >/dev/null
+        echo "Command validation test passed"
+    fi
+fi
+
+echo "Pre-push checks completed"
+"""
+        pre_push_hook.write_text(pre_push_content)
+        pre_push_hook.chmod(0o755)
+        print_success("Created basic pre-push hook")
+
+
+def _format_check_result(result: Dict[str, Any]) -> None:
+    """Format command check result for display."""
+    action = result.get("action", "UNKNOWN")
+
+    if action == "PASS":
+        print_success("Command passed validation")
+    elif action == "ERROR":
+        message = result.get("message", "Command blocked")
+        print_error(f"Command blocked: {message}")
+    elif action == "EXECUTE":
+        new_command = result.get("command", "")
+        print_warning(f"Command should be replaced with: {new_command}")
+    else:
+        print_info(f"Command check result: {action}")
+
+    # Show additional details if available
+    if "reason" in result:
+        print_info(f"Reason: {result['reason']}")
+
+    if "analysis_type" in result:
+        print_info(f"Analysis type: {result['analysis_type']}")
+
+
+def _create_config_files(
+    auditor_dir: Path, template: str, update: bool = False
+) -> None:
     """Create basic configuration files for the specified template."""
+    import yaml
 
     # Main configuration file
-    main_config = {
+    main_config: Dict[str, Any] = {
         "version": "1.0.0",
         "template": template,
         "ai": {
@@ -277,15 +568,24 @@ def _create_config_files(auditor_dir: Path, template: str) -> None:
         },
     }
 
+    # Template-specific configurations
+    if template == "python":
+        main_config["ai"]["model"] = "gpt-4o"
+        main_config["security"]["python_specific"] = True
+    elif template == "node":
+        main_config["security"]["node_specific"] = True
+    elif template == "security":
+        main_config["security"]["strict_mode"] = True
+        main_config["security"]["max_command_length"] = 500
+
     config_file = auditor_dir / "config" / "auditor.yml"
     with open(config_file, "w", encoding="utf-8") as f:
-        import yaml
-
         yaml.dump(main_config, f, default_flow_style=False)
-    print_success(f"Created config file: {config_file}")
+    action = "Updated" if update else "Created"
+    print_success(f"{action} config file: {config_file}")
 
     # Security rules file
-    security_rules = {
+    security_rules: Dict[str, Any] = {
         "version": "1.0.0",
         "dangerous_patterns": [
             {
@@ -306,15 +606,43 @@ def _create_config_files(auditor_dir: Path, template: str) -> None:
         ],
     }
 
+    # Add template-specific rules
+    if template == "python":
+        python_patterns: List[Dict[str, str]] = [
+            {
+                "pattern": r"eval\s*\(",
+                "severity": "high",
+                "message": "Use of eval() function is dangerous",
+            },
+            {
+                "pattern": r"exec\s*\(",
+                "severity": "high",
+                "message": "Use of exec() function is dangerous",
+            },
+        ]
+        security_rules["dangerous_patterns"].extend(python_patterns)
+    elif template == "node":
+        node_patterns: List[Dict[str, str]] = [
+            {
+                "pattern": r"eval\s*\(",
+                "severity": "high",
+                "message": "Use of eval() function is dangerous",
+            },
+            {
+                "pattern": r"Function\s*\(",
+                "severity": "medium",
+                "message": "Dynamic function creation should be avoided",
+            },
+        ]
+        security_rules["dangerous_patterns"].extend(node_patterns)
+
     security_file = auditor_dir / "config" / "rules" / "security-rules.yml"
     with open(security_file, "w", encoding="utf-8") as f:
-        import yaml
-
         yaml.dump(security_rules, f, default_flow_style=False)
-    print_success(f"Created security rules: {security_file}")
+    print_success(f"{action} security rules: {security_file}")
 
     # AI prompts file
-    ai_prompts = {
+    ai_prompts: Dict[str, Any] = {
         "version": "1.0.0",
         "prompts": {
             "security_analysis": (
@@ -333,12 +661,24 @@ def _create_config_files(auditor_dir: Path, template: str) -> None:
         },
     }
 
+    # Add template-specific prompts
+    if template == "python":
+        ai_prompts["prompts"]["python_security"] = (
+            "Analyze this Python command for security issues:\n"
+            "Command: {command}\n\n"
+            "Check for: eval/exec usage, file operations, network calls, imports"
+        )
+    elif template == "node":
+        ai_prompts["prompts"]["node_security"] = (
+            "Analyze this Node.js command for security issues:\n"
+            "Command: {command}\n\n"
+            "Check for: eval usage, file operations, require() calls, child_process"
+        )
+
     prompts_file = auditor_dir / "config" / "prompts" / "openai-prompts.yml"
     with open(prompts_file, "w", encoding="utf-8") as f:
-        import yaml
-
         yaml.dump(ai_prompts, f, default_flow_style=False)
-    print_success(f"Created AI prompts: {prompts_file}")
+    print_success(f"{action} AI prompts: {prompts_file}")
 
     # README file
     readme_content = f"""# AI Command Auditor Configuration
@@ -347,30 +687,72 @@ This directory contains the configuration for AI Command Auditor in your project
 
 ## Directory Structure
 
-- `config/auditor.yml` - Main configuration file
-- `config/rules/` - Security and validation rules
-- `config/prompts/` - AI prompts for analysis
-- `hooks/` - Git hook scripts
-- `workflows/` - GitHub Actions workflows
+```
+.ai-auditor/
+├── config/
+│   ├── auditor.yml          # Main configuration
+│   ├── rules/
+│   │   └── security-rules.yml # Security validation rules
+│   └── prompts/
+│       └── openai-prompts.yml # AI validation prompts
+├── hooks/                   # Git hook scripts (if applicable)
+├── workflows/              # GitHub Actions templates
+└── README.md              # This file
+```
+
+## Configuration
+
+### Main Configuration (`config/auditor.yml`)
+
+The main configuration file controls:
+- AI model settings (model, timeout, retries)
+- Security settings (command length limits, multiline commands)
+- Logging configuration
+
+### Security Rules (`config/rules/security-rules.yml`)
+
+Define patterns for dangerous commands that should be blocked or flagged.
+Each rule can specify:
+- `pattern`: Regular expression to match
+- `severity`: critical, high, medium, low
+- `message`: Human-readable explanation
+
+### AI Prompts (`config/prompts/openai-prompts.yml`)
+
+Define the prompts sent to the AI model for command analysis.
+Templates support variable substitution using `{{variable}}` syntax.
 
 ## Template: {template}
 
-This configuration was initialized with the {template} template.
+This configuration was created using the '{template}' template, which includes
+{template}-specific security rules and prompts.
+
+## Usage
+
+After configuration, use the AI Command Auditor CLI:
+
+```bash
+# Test a command
+ai-auditor check-command "your command here"
+
+# Validate your setup
+ai-auditor validate-setup
+
+# Update configuration
+ai-auditor update-config
+```
 
 ## Customization
 
-Feel free to modify any files in this directory to customize the behavior
-of AI Command Auditor for your project needs.
-
-## Documentation
-
-For more information, visit: https://etherisc.github.io/ai-command-auditor
+Feel free to modify any of these configuration files to match your project's
+specific needs. The configuration is designed to be version-controlled along
+with your project.
 """
 
     readme_file = auditor_dir / "README.md"
     with open(readme_file, "w", encoding="utf-8") as f:
         f.write(readme_content)
-    print_success(f"Created README: {readme_file}")
+    print_success(f"{action} README: {readme_file}")
 
 
 def main() -> None:

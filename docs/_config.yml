@@ -1,0 +1,187 @@
+# AI Command Auditor Documentation Site
+title: "AI Command Auditor"
+description: "Secure command validation and analysis for development workflows"
+url: "https://etherisc.github.io"
+baseurl: "/ai-command-auditor"
+
+# Site author
+author:
+  name: "Etherisc"
+  bio: "Decentralized insurance protocols and development tools"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/etherisc"
+
+# Theme and appearance
+remote_theme: "mmistakes/minimal-mistakes"
+minimal_mistakes_skin: "default"
+
+# Reading settings
+markdown: kramdown
+highlighter: rouge
+timezone: UTC
+
+# Plugins
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jekyll-include-cache
+  - jekyll-seo-tag
+
+# Analytics
+analytics:
+  provider: false
+
+# Search
+search: true
+search_full_content: true
+
+# SEO
+logo: "/assets/images/logo.png"
+og_image: "/assets/images/ai-auditor-og.png"
+
+# Social
+social:
+  type: Organization
+  name: Etherisc
+  links:
+    - "https://github.com/etherisc"
+
+# Navigation
+header_pages:
+  - installation/index.md
+  - configuration/index.md
+  - api/index.md
+  - examples/index.md
+  - support/index.md
+
+# Main navigation
+main:
+  - title: "Installation"
+    url: /installation/
+  - title: "Configuration"
+    url: /configuration/
+  - title: "API Reference"
+    url: /api/
+  - title: "Examples"
+    url: /examples/
+  - title: "Support"
+    url: /support/
+
+# Documentation navigation
+docs:
+  - title: Getting Started
+    children:
+      - title: "Quick Start"
+        url: /installation/
+      - title: "Installation Methods"
+        url: /installation/methods/
+      - title: "System Requirements"
+        url: /installation/requirements/
+
+  - title: Configuration
+    children:
+      - title: "Configuration Overview"
+        url: /configuration/
+      - title: "Security Rules"
+        url: /configuration/security-rules/
+      - title: "AI Prompts"
+        url: /configuration/ai-prompts/
+      - title: "Templates"
+        url: /configuration/templates/
+      - title: "Git Hooks"
+        url: /configuration/git-hooks/
+
+  - title: API Reference
+    children:
+      - title: "CLI Commands"
+        url: /api/cli/
+      - title: "Python API"
+        url: /api/python/
+      - title: "Integration Patterns"
+        url: /api/integration/
+      - title: "Developer Guide"
+        url: /api/developer/
+
+  - title: Examples
+    children:
+      - title: "Getting Started Tutorial"
+        url: /examples/tutorial/
+      - title: "Python Projects"
+        url: /examples/python/
+      - title: "Node.js Projects"
+        url: /examples/nodejs/
+      - title: "DevOps Integration"
+        url: /examples/devops/
+      - title: "Advanced Examples"
+        url: /examples/advanced/
+
+  - title: Support
+    children:
+      - title: "Troubleshooting"
+        url: /support/troubleshooting/
+      - title: "FAQ"
+        url: /support/faq/
+      - title: "Community"
+        url: /support/community/
+      - title: "Contributing"
+        url: /support/contributing/
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /:collection/:name/
+
+# Defaults
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: false
+      share: true
+      related: true
+
+  # _pages
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      author_profile: false
+
+  # _docs
+  - scope:
+      path: ""
+      type: docs
+    values:
+      layout: single
+      read_time: false
+      author_profile: false
+      share: false
+      comments: false
+      sidebar:
+        nav: "docs"
+
+# Exclude from processing
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - "*.sh"
+  - README.md

@@ -52,7 +52,7 @@ jobs:
 
     - name: Run MyPy (Type Checking)
       run: |
-        mypy scripts/python/ --ignore-missing-imports --no-strict-optional
+        mypy --explicit-package-bases scripts/python/
 
   lint-bash:
     name: Bash Linting

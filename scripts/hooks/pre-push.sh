@@ -106,12 +106,13 @@ else
     print_warning "Pylint issues found (review recommended)"
 fi
 
-# MyPy type checking
+# MyPy type checking (exactly as CI does it)
 print_section "MyPy Type Checking"
-if mypy scripts/python/ --ignore-missing-imports; then
+if mypy --explicit-package-bases scripts/python/; then
     print_success "MyPy type checking passed"
 else
     print_warning "MyPy type checking issues found (review recommended)"
+    # Don't fail on MyPy issues for now
 fi
 echo
 

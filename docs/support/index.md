@@ -1,12 +1,8 @@
 ---
-layout: single
-title: "Support & Help"
+layout: default
+title: Support & Help
+nav_order: 7
 description: "Get help, find answers, and connect with the community"
-toc: true
-toc_label: "Support Topics"
-toc_icon: "question-circle"
-sidebar:
-  nav: "docs"
 ---
 
 # 🆘 Support & Help

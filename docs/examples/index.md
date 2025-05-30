@@ -1,12 +1,9 @@
 ---
-layout: single
-title: "Examples & Tutorials"
+layout: default
+title: Examples & Tutorials
+nav_order: 5
+has_children: true
 description: "Practical examples and step-by-step tutorials"
-toc: true
-toc_label: "Examples"
-toc_icon: "lightbulb"
-sidebar:
-  nav: "docs"
 ---
 
 # 💡 Examples & Tutorials

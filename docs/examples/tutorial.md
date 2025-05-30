@@ -1,12 +1,8 @@
 ---
-layout: single
-title: "Getting Started Tutorial"
+layout: default
+title: Getting Started Tutorial
+nav_order: 6
 description: "Step-by-step tutorial for setting up and using AI Command Auditor"
-toc: true
-toc_label: "Tutorial Steps"
-toc_icon: "graduation-cap"
-sidebar:
-  nav: "docs"
 ---
 
 # 🎓 Getting Started Tutorial

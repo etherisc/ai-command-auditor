@@ -1,12 +1,8 @@
 ---
-layout: single
-title: "Configuration"
+layout: default
+title: Configuration
+nav_order: 4
 description: "Configure AI Command Auditor for your specific needs"
-toc: true
-toc_label: "Configuration Topics"
-toc_icon: "cog"
-sidebar:
-  nav: "docs"
 ---
 
 # ⚙️ Configuration Guide

@@ -1,12 +1,8 @@
 ---
-layout: single
-title: "API Reference"
+layout: default
+title: API Reference
+nav_order: 3
 description: "Complete CLI and Python API documentation"
-toc: true
-toc_label: "API Topics"
-toc_icon: "code"
-sidebar:
-  nav: "docs"
 ---
 
 # 🔌 API Reference

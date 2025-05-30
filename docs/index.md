@@ -13,7 +13,7 @@ permalink: /
 Secure command validation and analysis for development workflows
 {: .fs-6 .fw-300 }
 
-[Get started now](/installation){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[Get started now]({{ site.baseurl }}/installation/){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [View on GitHub](https://github.com/etherisc/ai-command-auditor){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
@@ -103,12 +103,12 @@ Fully open source with active community development, transparent security practi
 
 ## 🚀 Ready to Get Started?
 
-[Install Now](/installation){: .btn .btn-primary .mr-2 }
-[View Tutorial](/examples/tutorial){: .btn .btn-outline }
+[Install Now]({{ site.baseurl }}/installation/){: .btn .btn-primary .mr-2 }
+[View Tutorial]({{ site.baseurl }}/examples/tutorial.html){: .btn .btn-outline }
 [GitHub Repository](https://github.com/etherisc/ai-command-auditor){: .btn .btn-outline }
 
 ---
 
 *AI Command Auditor is developed by [Etherisc](https://github.com/etherisc) and the open source community.*
 
-*Questions? Check our [Support](/support) section or join the community discussion.*
+*Questions? Check our [Support]({{ site.baseurl }}/support/) section or join the community discussion.*

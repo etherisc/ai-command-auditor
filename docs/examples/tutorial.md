@@ -821,7 +821,7 @@ Now that you have a working setup, consider these next steps:
 
 If you encounter issues:
 
-1. Check the [FAQ](/support/faq/)
+1. Check the [FAQ]({{ site.baseurl }}/support/faq/)
 2. Review [troubleshooting guide](/support/troubleshooting/)
 3. Join the [community discussion](/support/community/)
 4. Report bugs on [GitHub](https://github.com/etherisc/ai-command-auditor/issues)

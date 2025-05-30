@@ -30,31 +30,29 @@ ai-auditor --version                            # Show version
 ai-auditor --help                               # Show help
 ```
 
-<div class="cli-grid">
-  <div class="cli-section">
-    <h3>🔍 Command Validation</h3>
-    <p>Validate individual commands or scripts for security</p>
-    <a href="/api/cli/#command-validation" class="btn btn--primary">View Commands</a>
-  </div>
+### 🔍 Command Validation
 
-  <div class="cli-section">
-    <h3>⚙️ Configuration</h3>
-    <p>Manage configuration settings and templates</p>
-    <a href="/api/cli/#configuration" class="btn btn--primary">View Commands</a>
-  </div>
+Validate individual commands or scripts for security
 
-  <div class="cli-section">
-    <h3>🔗 Git Integration</h3>
-    <p>Setup and manage git hooks integration</p>
-    <a href="/api/cli/#git-integration" class="btn btn--primary">View Commands</a>
-  </div>
+[View Commands]({{ site.baseurl }}/api/cli/#command-validation){: .btn .btn-outline }
 
-  <div class="cli-section">
-    <h3>📊 Reporting</h3>
-    <p>Generate reports and view analysis results</p>
-    <a href="/api/cli/#reporting" class="btn btn--primary">View Commands</a>
-  </div>
-</div>
+### ⚙️ Configuration
+
+Manage configuration settings and templates
+
+[View Commands]({{ site.baseurl }}/api/cli/#configuration){: .btn .btn-outline }
+
+### 🔗 Git Integration
+
+Setup and manage git hooks integration
+
+[View Commands]({{ site.baseurl }}/api/cli/#git-integration){: .btn .btn-outline }
+
+### 📊 Reporting
+
+Generate reports and view analysis results
+
+[View Commands]({{ site.baseurl }}/api/cli/#reporting){: .btn .btn-outline }
 
 ## 🐍 Python API
 
@@ -76,31 +74,29 @@ rules = SecurityRules.from_file("custom-rules.yml")
 auditor.update_rules(rules)
 ```
 
-<div class="api-grid">
-  <div class="api-section">
-    <h3>🔧 Core API</h3>
-    <p>Main classes and functions for command analysis</p>
-    <a href="/api/python/#core-api" class="btn btn--primary">View API</a>
-  </div>
+### 🔧 Core API
 
-  <div class="api-section">
-    <h3>🛡️ Security API</h3>
-    <p>Security rules, validation, and policy management</p>
-    <a href="/api/python/#security-api" class="btn btn--primary">View API</a>
-  </div>
+Main classes and functions for command analysis
 
-  <div class="api-section">
-    <h3>🤖 AI Integration</h3>
-    <p>AI model configuration and prompt management</p>
-    <a href="/api/python/#ai-integration" class="btn btn--primary">View API</a>
-  </div>
+[View API]({{ site.baseurl }}/api/python/#core-api){: .btn .btn-outline }
 
-  <div class="api-section">
-    <h3>🔌 Extensions</h3>
-    <p>Plugin system and custom validators</p>
-    <a href="/api/python/#extensions" class="btn btn--primary">View API</a>
-  </div>
-</div>
+### 🛡️ Security API
+
+Security rules, validation, and policy management
+
+[View API]({{ site.baseurl }}/api/python/#security-api){: .btn .btn-outline }
+
+### 🤖 AI Integration
+
+AI model configuration and prompt management
+
+[View API]({{ site.baseurl }}/api/python/#ai-integration){: .btn .btn-outline }
+
+### 🔌 Extensions
+
+Plugin system and custom validators
+
+[View API]({{ site.baseurl }}/api/python/#extensions){: .btn .btn-outline }
 
 ## 🚀 Getting Started Examples
 
@@ -155,11 +151,11 @@ The complete CLI reference covers all commands, options, and use cases:
 
 | Section | Description | Link |
 |---------|-------------|------|
-| **Command Validation** | Validate commands and scripts | [CLI Commands →](/api/cli/#command-validation) |
-| **Configuration Management** | Manage settings and templates | [Config Commands →](/api/cli/#configuration) |
-| **Git Integration** | Setup hooks and automation | [Git Commands →](/api/cli/#git-integration) |
-| **Reporting & Analysis** | Generate reports and insights | [Report Commands →](/api/cli/#reporting) |
-| **Utility Commands** | Helper and diagnostic commands | [Utility Commands →](/api/cli/#utilities) |
+| **Command Validation** | Validate commands and scripts | [CLI Commands →]({{ site.baseurl }}/api/cli/#command-validation) |
+| **Configuration Management** | Manage settings and templates | [Config Commands →]({{ site.baseurl }}/api/cli/#configuration) |
+| **Git Integration** | Setup hooks and automation | [Git Commands →]({{ site.baseurl }}/api/cli/#git-integration) |
+| **Reporting & Analysis** | Generate reports and insights | [Report Commands →]({{ site.baseurl }}/api/cli/#reporting) |
+| **Utility Commands** | Helper and diagnostic commands | [Utility Commands →]({{ site.baseurl }}/api/cli/#utilities) |
 
 ### Python API Documentation
 
@@ -167,11 +163,11 @@ Complete Python API reference with examples:
 
 | Module | Description | Link |
 |--------|-------------|------|
-| **`CommandAuditor`** | Main auditor class and methods | [Core API →](/api/python/#commandauditor) |
-| **`SecurityRules`** | Security policy management | [Security API →](/api/python/#securityrules) |
-| **`AIAnalyzer`** | AI-powered analysis engine | [AI API →](/api/python/#aianalyzer) |
-| **`Configuration`** | Configuration management | [Config API →](/api/python/#configuration) |
-| **`Validators`** | Custom validation framework | [Validators →](/api/python/#validators) |
+| **`CommandAuditor`** | Main auditor class and methods | [Core API →]({{ site.baseurl }}/api/python/#commandauditor) |
+| **`SecurityRules`** | Security policy management | [Security API →]({{ site.baseurl }}/api/python/#securityrules) |
+| **`AIAnalyzer`** | AI-powered analysis engine | [AI API →]({{ site.baseurl }}/api/python/#aianalyzer) |
+| **`Configuration`** | Configuration management | [Config API →]({{ site.baseurl }}/api/python/#configuration) |
+| **`Validators`** | Custom validation framework | [Validators →]({{ site.baseurl }}/api/python/#validators) |
 
 ## 🔗 Integration Patterns
 
@@ -357,67 +353,14 @@ auditor.apply_policy(policy)
 
 ### Complete Documentation
 
-- 🖥️ [**Complete CLI Reference**](/api/cli/) - All CLI commands and options
-- 🐍 [**Complete Python API**](/api/python/) - Full Python API documentation
-- 🔗 [**Integration Guide**](/api/integration/) - Integration patterns and examples
-- 👩‍💻 [**Developer Guide**](/api/developer/) - Contributing and development
+- 🖥️ [**Complete CLI Reference**]({{ site.baseurl }}/api/cli/) - All CLI commands and options
+- 🐍 [**Complete Python API**]({{ site.baseurl }}/api/python/) - Full Python API documentation
+- 🔗 [**Integration Guide**]({{ site.baseurl }}/api/integration/) - Integration patterns and examples
+- 👩‍💻 [**Developer Guide**]({{ site.baseurl }}/api/developer/) - Contributing and development
 
 ### Quick Links
 
-- [Installation Guide](/installation/) - Get started quickly
-- [Configuration Reference](/configuration/) - Configure for your needs
-- [Examples & Tutorials](/examples/) - Learn with practical examples
-- [Support & FAQ](/support/) - Get help and find answers
-
-<style>
-.cli-grid, .api-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin: 2rem 0;
-}
-
-.cli-section, .api-section {
-  padding: 1.5rem;
-  border: 1px solid #e1e1e1;
-  border-radius: 8px;
-  text-align: center;
-  background: #f8f9fa;
-}
-
-.cli-section h3, .api-section h3 {
-  margin-bottom: 1rem;
-  color: #2c3e50;
-}
-
-.cli-section p, .api-section p {
-  margin-bottom: 1rem;
-}
-
-table {
-  width: 100%;
-  margin: 1rem 0;
-  border-collapse: collapse;
-}
-
-table th, table td {
-  padding: 0.75rem;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-table th {
-  background-color: #f8f9fa;
-  font-weight: 600;
-}
-
-@media (max-width: 768px) {
-  .cli-grid, .api-grid {
-    grid-template-columns: 1fr;
-  }
-
-  table {
-    font-size: 0.9rem;
-  }
-}
-</style>
+- [Installation Guide]({{ site.baseurl }}/installation/) - Get started quickly
+- [Configuration Reference]({{ site.baseurl }}/configuration/) - Configure for your needs
+- [Examples & Tutorials]({{ site.baseurl }}/examples/) - Learn with practical examples
+- [Support & FAQ]({{ site.baseurl }}/support/) - Get help and find answers

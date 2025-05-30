@@ -393,7 +393,7 @@ ai-auditor config summary
 
 Once you've configured AI Command Auditor:
 
-- 🎯 [Try the Tutorial](/examples/tutorial/) - Learn with hands-on examples
+- 🎯 [Try the Tutorial]({{ site.baseurl }}/examples/tutorial/) - Learn with hands-on examples
 - 🔌 [Explore CLI Commands](/api/cli/) - Master the command-line interface
 - 💡 [Browse Examples](/examples/) - See real-world configurations
 - ❓ [Get Support](/support/) - Find help and community resources

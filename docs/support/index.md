@@ -15,7 +15,7 @@ Need help with AI Command Auditor? You're in the right place! Find answers to co
   <div class="help-card">
     <h3>❓ FAQ</h3>
     <p>Frequently asked questions and quick answers</p>
-    <a href="/support/faq/" class="btn btn--primary">View FAQ</a>
+    <a href="{{ site.baseurl }}/support/faq/" class="btn btn-primary">View FAQ</a>
   </div>
 
   <div class="help-card">
@@ -347,7 +347,7 @@ Love AI Command Auditor? Here's how you can support the project:
   <h3>Ready to Get Help?</h3>
   <p>Choose the best option for your needs:</p>
   <div class="cta-buttons">
-    <a href="/support/faq/" class="btn btn--primary">Check FAQ</a>
+    <a href="{{ site.baseurl }}/support/faq/" class="btn btn-primary">Check FAQ</a>
     <a href="/support/troubleshooting/" class="btn btn--secondary">Troubleshoot</a>
     <a href="https://github.com/etherisc/ai-command-auditor/discussions" class="btn btn--outline" target="_blank">Ask Community</a>
   </div>

@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: home
 title: Home
 nav_order: 1
 description: "AI Command Auditor - Secure command validation and analysis for development workflows"
@@ -7,6 +7,7 @@ permalink: /
 ---
 
 # AI Command Auditor
+
 {: .fs-9 }
 
 Secure command validation and analysis for development workflows
@@ -24,7 +25,7 @@ AI Command Auditor is a powerful tool that validates and analyzes commands in yo
 ### Key Features
 
 - **🛡️ Intelligent Security Analysis**: AI-powered command validation to detect dangerous patterns
-- **⚙️ Customizable Rules**: Flexible security rules and validation patterns  
+- **⚙️ Customizable Rules**: Flexible security rules and validation patterns
 - **🔗 Git Integration**: Seamless git hooks for automatic command validation
 - **📝 AI-Powered Prompts**: Customizable AI prompts for context-aware analysis
 - **🎨 Template System**: Pre-configured templates for different project types
@@ -54,22 +55,26 @@ ai-auditor --version
 ## 🎬 Quick Start Tutorial
 
 1. **Install AI Command Auditor**
+
    ```bash
    curl -fsSL https://raw.githubusercontent.com/etherisc/ai-command-auditor/main/install.sh | sh
    ```
 
 2. **Test Your First Command**
+
    ```bash
    ai-auditor check-command "rm -rf temp/"
    ```
 
 3. **Customize Configuration**
+
    ```bash
    # Edit security rules
    nano .ai-auditor/config/rules/security-rules.yml
    ```
 
 4. **Setup Git Hooks**
+
    ```bash
    ai-auditor setup-hooks
    ```
@@ -79,15 +84,19 @@ ai-auditor --version
 ## 🌟 Why Choose AI Command Auditor?
 
 ### Intelligent & Adaptive
+
 Our AI-powered analysis goes beyond simple pattern matching to understand context and intent, providing smarter security decisions.
 
 ### Developer-Friendly
+
 Designed by developers for developers, with intuitive configuration, clear documentation, and minimal setup friction.
 
 ### Enterprise-Ready
+
 Scalable configuration management, audit logging, and team collaboration features for organizations of any size.
 
 ### Open Source
+
 Fully open source with active community development, transparent security practices, and extensible architecture.
 
 ---

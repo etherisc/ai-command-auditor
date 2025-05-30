@@ -1,8 +1,9 @@
 ---
 layout: default
-title: Getting Started Tutorial
-nav_order: 6
-description: "Step-by-step tutorial for setting up and using AI Command Auditor"
+title: Tutorial
+parent: Examples & Tutorials
+nav_order: 1
+description: "Complete step-by-step tutorial for AI Command Auditor"
 ---
 
 # 🎓 Getting Started Tutorial
@@ -812,19 +813,18 @@ Now that you have a working setup, consider these next steps:
 ## 📚 Additional Resources
 
 - 📖 [Configuration Guide](/configuration/) - Deep dive into configuration options
-- 🔧 [CLI Reference](/api/cli/) - Complete command reference
-- 🐍 [Python API](/api/python/) - Programming interface documentation
+- 🔧 [CLI Reference]({{ site.baseurl }}/api/) - Complete command reference
+- 🐍 [Python API]({{ site.baseurl }}/api/) - Programming interface documentation
 - 💡 [Examples](/examples/) - More practical examples
-- 🆘 [Troubleshooting](/support/troubleshooting/) - Common issues and solutions
+- 🆘 [FAQ]({{ site.baseurl }}/faq/) - Common issues and solutions
 
 ## 🤝 Getting Help
 
 If you encounter issues:
 
-1. Check the [FAQ]({{ site.baseurl }}/support/faq/)
-2. Review [troubleshooting guide](/support/troubleshooting/)
-3. Join the [community discussion](/support/community/)
-4. Report bugs on [GitHub](https://github.com/etherisc/ai-command-auditor/issues)
+1. Check the [FAQ]({{ site.baseurl }}/faq/)
+2. [Join the community discussion](https://github.com/etherisc/ai-command-auditor/discussions)
+3. [Report issues on GitHub](https://github.com/etherisc/ai-command-auditor/issues)
 
 Happy secure coding! 🔒✨
 

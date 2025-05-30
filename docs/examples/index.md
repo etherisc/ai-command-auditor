@@ -10,7 +10,7 @@ description: "Practical examples and step-by-step tutorials"
 
 Get hands-on experience with AI Command Auditor through practical examples and step-by-step tutorials.
 
-[Start Tutorial]({{ site.baseurl }}/examples/tutorial/){: .btn .btn-primary }
+[Start Tutorial]({{ site.baseurl }}/examples/tutorial){: .btn .btn-primary }
 
 ## 🎯 Getting Started Tutorial
 
@@ -19,54 +19,66 @@ Get hands-on experience with AI Command Auditor through practical examples and s
 Learn everything from installation to advanced configuration in 30 minutes
 
 - ✅ Installation and setup
-- ✅ First command validation  
+- ✅ First command validation
 - ✅ Configuration customization
 - ✅ Git hooks integration
 - ✅ Team workflow setup
 
-[Start Tutorial]({{ site.baseurl }}/examples/tutorial/){: .btn .btn-primary }
+[Start Tutorial]({{ site.baseurl }}/examples/tutorial){: .btn .btn-primary }
 
 ## 🎨 Project-Specific Examples
 
 Choose your development environment and follow tailored examples:
 
 ### 🐍 Python Projects
+
 Flask, Django, FastAPI, and general Python development
+
 - Virtual environment validation
 - Package management security
 - Script execution safety
 - CI/CD integration
 
 ### 🟢 Node.js Projects
+
 React, Express, Nest.js, and JavaScript/TypeScript
+
 - npm/yarn security validation
 - Script execution checks
 - Package.json integration
 - Build process security
 
 ### 🦀 Rust Projects
+
 Cargo, system-level programming, and Rust toolchain
+
 - Cargo command validation
 - System call security
 - Cross-compilation safety
 - Performance optimization
 
 ### 🐳 DevOps & Infrastructure
+
 Docker, Kubernetes, Terraform, and automation
+
 - Container security validation
 - Infrastructure as Code checks
 - Deployment pipeline safety
 - Cloud command validation
 
 ### 🔒 Security-Focused
+
 High-security environments and compliance
+
 - Strict security policies
 - Compliance validation
 - Audit trail setup
 - Zero-trust workflows
 
 ### 🏢 Enterprise Integration
+
 Large teams, multiple projects, centralized management
+
 - Centralized configuration
 - Team policy management
 - Monitoring and reporting
@@ -75,6 +87,7 @@ Large teams, multiple projects, centralized management
 ## 🔗 Integration Examples
 
 ### GitHub Actions
+
 ```yaml
 name: Command Validation
 on: [push, pull_request]
@@ -90,6 +103,7 @@ jobs:
 ```
 
 ### Pre-commit Hook
+
 ```yaml
 # .pre-commit-config.yaml
 repos:
@@ -102,18 +116,20 @@ repos:
 ```
 
 ### Makefile Integration
+
 ```makefile
 # Makefile
 validate-commands:
-	ai-auditor validate-makefile $(MAKEFILE_LIST)
+ ai-auditor validate-makefile $(MAKEFILE_LIST)
 
 deploy: validate-commands
-	./deploy.sh
+ ./deploy.sh
 ```
 
 ## 📖 Example Configurations
 
 ### Basic Security Rules
+
 ```yaml
 # .ai-auditor/config/rules/security-rules.yml
 rules:
@@ -127,6 +143,7 @@ rules:
 ```
 
 ### Team Configuration
+
 ```yaml
 # .ai-auditor/config/team-config.yml
 team:
@@ -143,6 +160,7 @@ team:
 ## 🚀 Quick Examples
 
 ### Basic Command Validation
+
 ```bash
 # Check a single command
 ai-auditor check-command "rm -rf /tmp/*"
@@ -155,6 +173,7 @@ ai-auditor scan-repository --recursive
 ```
 
 ### Configuration Management
+
 ```bash
 # Show current configuration
 ai-auditor config show
@@ -171,6 +190,6 @@ ai-auditor config load team-config.yml
 Ready to dive deeper? Check out our comprehensive documentation:
 
 - [Installation Guide]({{ site.baseurl }}/installation/) - Get started quickly
-- [Configuration Reference]({{ site.baseurl }}/configuration/) - Configure for your needs  
+- [Configuration Reference]({{ site.baseurl }}/configuration/) - Configure for your needs
 - [API Reference]({{ site.baseurl }}/api/) - CLI and Python API docs
-- [Support & Help]({{ site.baseurl }}/support/) - Get help and find answers
+- [FAQ]({{ site.baseurl }}/faq/) - Get help and find answers

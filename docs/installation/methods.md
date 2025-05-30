@@ -7,6 +7,7 @@ description: "Detailed installation methods for AI Command Auditor"
 ---
 
 # Installation Methods
+
 {: .fs-8 }
 
 Choose the installation method that best fits your development environment and requirements.
@@ -22,7 +23,8 @@ The one-line installer automatically detects your system and installs AI Command
 curl -fsSL https://raw.githubusercontent.com/etherisc/ai-command-auditor/main/install.sh | sh
 ```
 
-### What it does:
+### What it does
+
 - Detects your operating system and architecture
 - Installs Python dependencies if needed
 - Downloads and installs the AI Command Auditor CLI
@@ -30,7 +32,8 @@ curl -fsSL https://raw.githubusercontent.com/etherisc/ai-command-auditor/main/in
 - Optionally configures git hooks
 - Verifies the installation
 
-### Options:
+### Options
+
 ```bash
 # Install with specific template
 curl -fsSL https://raw.githubusercontent.com/etherisc/ai-command-auditor/main/install.sh | sh -s -- --template python
@@ -323,7 +326,7 @@ ai-auditor self-test --verbose
 > **Success**: If all tests pass, you're ready to start using AI Command Auditor!
 
 {: .warning }
-> **Issues**: If you encounter problems, check our [Troubleshooting Guide](/support/troubleshooting) or [file an issue](https://github.com/etherisc/ai-command-auditor/issues).
+> **Issues**: If you encounter problems, check our [FAQ]({{ site.baseurl }}/faq/) or [file an issue](https://github.com/etherisc/ai-command-auditor/issues).
 
 ---
 

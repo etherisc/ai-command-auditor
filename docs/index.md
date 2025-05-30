@@ -111,4 +111,4 @@ Fully open source with active community development, transparent security practi
 
 *AI Command Auditor is developed by [Etherisc](https://github.com/etherisc) and the open source community.*
 
-*Questions? Check our [Support]({{ site.baseurl }}/support/) section or join the community discussion.*
+*Questions? Check our [FAQ]({{ site.baseurl }}/faq/) or join the community discussion.*

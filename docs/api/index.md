@@ -34,25 +34,25 @@ ai-auditor --help                               # Show help
 
 Validate individual commands or scripts for security
 
-[View Commands]({{ site.baseurl }}/api/cli/#command-validation){: .btn .btn-outline }
+[View Commands]({{ site.baseurl }}/api/#command-validation){: .btn .btn-outline }
 
 ### ⚙️ Configuration
 
 Manage configuration settings and templates
 
-[View Commands]({{ site.baseurl }}/api/cli/#configuration){: .btn .btn-outline }
+[View Commands]({{ site.baseurl }}/api/#configuration){: .btn .btn-outline }
 
 ### 🔗 Git Integration
 
 Setup and manage git hooks integration
 
-[View Commands]({{ site.baseurl }}/api/cli/#git-integration){: .btn .btn-outline }
+[View Commands]({{ site.baseurl }}/api/#git-integration){: .btn .btn-outline }
 
 ### 📊 Reporting
 
 Generate reports and view analysis results
 
-[View Commands]({{ site.baseurl }}/api/cli/#reporting){: .btn .btn-outline }
+[View Commands]({{ site.baseurl }}/api/#reporting){: .btn .btn-outline }
 
 ## 🐍 Python API
 
@@ -78,25 +78,25 @@ auditor.update_rules(rules)
 
 Main classes and functions for command analysis
 
-[View API]({{ site.baseurl }}/api/python/#core-api){: .btn .btn-outline }
+[View API]({{ site.baseurl }}/api/#core-api){: .btn .btn-outline }
 
 ### 🛡️ Security API
 
 Security rules, validation, and policy management
 
-[View API]({{ site.baseurl }}/api/python/#security-api){: .btn .btn-outline }
+[View API]({{ site.baseurl }}/api/#security-api){: .btn .btn-outline }
 
 ### 🤖 AI Integration
 
 AI model configuration and prompt management
 
-[View API]({{ site.baseurl }}/api/python/#ai-integration){: .btn .btn-outline }
+[View API]({{ site.baseurl }}/api/#ai-integration){: .btn .btn-outline }
 
 ### 🔌 Extensions
 
 Plugin system and custom validators
 
-[View API]({{ site.baseurl }}/api/python/#extensions){: .btn .btn-outline }
+[View API]({{ site.baseurl }}/api/#extensions){: .btn .btn-outline }
 
 ## 🚀 Getting Started Examples
 
@@ -151,11 +151,11 @@ The complete CLI reference covers all commands, options, and use cases:
 
 | Section | Description | Link |
 |---------|-------------|------|
-| **Command Validation** | Validate commands and scripts | [CLI Commands →]({{ site.baseurl }}/api/cli/#command-validation) |
-| **Configuration Management** | Manage settings and templates | [Config Commands →]({{ site.baseurl }}/api/cli/#configuration) |
-| **Git Integration** | Setup hooks and automation | [Git Commands →]({{ site.baseurl }}/api/cli/#git-integration) |
-| **Reporting & Analysis** | Generate reports and insights | [Report Commands →]({{ site.baseurl }}/api/cli/#reporting) |
-| **Utility Commands** | Helper and diagnostic commands | [Utility Commands →]({{ site.baseurl }}/api/cli/#utilities) |
+| **Command Validation** | Validate commands and scripts | [CLI Commands →]({{ site.baseurl }}/api/#command-validation) |
+| **Configuration Management** | Manage settings and templates | [Config Commands →]({{ site.baseurl }}/api/#configuration) |
+| **Git Integration** | Setup hooks and automation | [Git Commands →]({{ site.baseurl }}/api/#git-integration) |
+| **Reporting & Analysis** | Generate reports and insights | [Report Commands →]({{ site.baseurl }}/api/#reporting) |
+| **Utility Commands** | Helper and diagnostic commands | [Utility Commands →]({{ site.baseurl }}/api/#utilities) |
 
 ### Python API Documentation
 
@@ -163,11 +163,11 @@ Complete Python API reference with examples:
 
 | Module | Description | Link |
 |--------|-------------|------|
-| **`CommandAuditor`** | Main auditor class and methods | [Core API →]({{ site.baseurl }}/api/python/#commandauditor) |
-| **`SecurityRules`** | Security policy management | [Security API →]({{ site.baseurl }}/api/python/#securityrules) |
-| **`AIAnalyzer`** | AI-powered analysis engine | [AI API →]({{ site.baseurl }}/api/python/#aianalyzer) |
-| **`Configuration`** | Configuration management | [Config API →]({{ site.baseurl }}/api/python/#configuration) |
-| **`Validators`** | Custom validation framework | [Validators →]({{ site.baseurl }}/api/python/#validators) |
+| **`CommandAuditor`** | Main auditor class and methods | [Core API →]({{ site.baseurl }}/api/#commandauditor) |
+| **`SecurityRules`** | Security policy management | [Security API →]({{ site.baseurl }}/api/#securityrules) |
+| **`AIAnalyzer`** | AI-powered analysis engine | [AI API →]({{ site.baseurl }}/api/#aianalyzer) |
+| **`Configuration`** | Configuration management | [Config API →]({{ site.baseurl }}/api/#configuration) |
+| **`Validators`** | Custom validation framework | [Validators →]({{ site.baseurl }}/api/#validators) |
 
 ## 🔗 Integration Patterns
 
@@ -353,14 +353,13 @@ auditor.apply_policy(policy)
 
 ### Complete Documentation
 
-- 🖥️ [**Complete CLI Reference**]({{ site.baseurl }}/api/cli/) - All CLI commands and options
-- 🐍 [**Complete Python API**]({{ site.baseurl }}/api/python/) - Full Python API documentation
-- 🔗 [**Integration Guide**]({{ site.baseurl }}/api/integration/) - Integration patterns and examples
-- 👩‍💻 [**Developer Guide**]({{ site.baseurl }}/api/developer/) - Contributing and development
+- 🖥️ [**Complete CLI Reference**]({{ site.baseurl }}/api/) - All CLI commands and options
+- 🐍 [**Complete Python API**]({{ site.baseurl }}/api/) - Full Python API documentation
+- 💡 [**Examples & Tutorials**]({{ site.baseurl }}/examples/) - Integration patterns and examples
 
 ### Quick Links
 
 - [Installation Guide]({{ site.baseurl }}/installation/) - Get started quickly
 - [Configuration Reference]({{ site.baseurl }}/configuration/) - Configure for your needs
 - [Examples & Tutorials]({{ site.baseurl }}/examples/) - Learn with practical examples
-- [Support & FAQ]({{ site.baseurl }}/support/) - Get help and find answers
+- [Support & FAQ]({{ site.baseurl }}/faq/) - Get help and find answers

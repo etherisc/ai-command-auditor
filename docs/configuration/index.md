@@ -116,19 +116,19 @@ Security rules define what commands are considered dangerous or suspicious. They
   <div class="config-item">
     <h3>🔒 Security Rules</h3>
     <p>Define dangerous command patterns and validation rules</p>
-    <a href="/configuration/security-rules/" class="btn btn--primary">Configure Rules</a>
+    <p>See the Security Rules section below for configuration details</p>
   </div>
 
   <div class="config-item">
     <h3>🎯 Performance Rules</h3>
     <p>Validate commands for performance and efficiency</p>
-    <a href="/configuration/performance-rules/" class="btn btn--primary">Configure Performance</a>
+    <p>See the Performance Settings section below for configuration details</p>
   </div>
 
   <div class="config-item">
     <h3>✏️ Custom Rules</h3>
     <p>Create your own validation rules and patterns</p>
-    <a href="/configuration/custom-rules/" class="btn btn--primary">Create Custom Rules</a>
+    <p>See the Custom Rules section below for configuration details</p>
   </div>
 </div>
 
@@ -140,19 +140,19 @@ Customize how AI analyzes commands by configuring prompts:
   <div class="config-item">
     <h3>🧠 Analysis Prompts</h3>
     <p>Configure how AI analyzes command safety and intent</p>
-    <a href="/configuration/ai-prompts/#analysis-prompts" class="btn btn--primary">Configure Analysis</a>
+    <p>See the AI Configuration section above for prompt settings</p>
   </div>
 
   <div class="config-item">
     <h3>🔐 Security Prompts</h3>
     <p>Specialized prompts for security-focused analysis</p>
-    <a href="/configuration/ai-prompts/#security-prompts" class="btn btn--primary">Configure Security</a>
+    <p>See the AI Configuration section above for security prompt settings</p>
   </div>
 
   <div class="config-item">
     <h3>🎨 Custom Prompts</h3>
     <p>Create domain-specific analysis prompts</p>
-    <a href="/configuration/ai-prompts/#custom-prompts" class="btn btn--primary">Create Custom</a>
+    <p>See the AI Configuration section above for custom prompt configuration</p>
   </div>
 </div>
 
@@ -194,7 +194,7 @@ Templates provide pre-configured settings for different project types:
   <div class="template-item">
     <h4>✏️ Custom Template</h4>
     <p>Create your own template configurations</p>
-    <a href="/configuration/templates/#custom-templates">Learn More</a>
+    <p>See the Template System section above for details</p>
   </div>
 </div>
 
@@ -224,7 +224,7 @@ git:
       validate_format: true
 ```
 
-[Learn more about Git Hooks →](/configuration/git-hooks/)
+For more details on git integration, see the Git Integration section in the main configuration above.
 
 ## 🚀 Quick Configuration Examples
 
@@ -367,25 +367,25 @@ ai-auditor config summary
   <div class="topic-item">
     <h4>🔌 Plugin System</h4>
     <p>Extend functionality with custom plugins</p>
-    <a href="/configuration/plugins/">Configure Plugins</a>
+    <p>See the main configuration above for plugin settings</p>
   </div>
 
   <div class="topic-item">
     <h4>🌐 Network Configuration</h4>
     <p>Configure proxies, timeouts, and API endpoints</p>
-    <a href="/configuration/network/">Network Settings</a>
+    <p>See the AI Configuration section above for network settings</p>
   </div>
 
   <div class="topic-item">
     <h4>📊 Monitoring & Metrics</h4>
     <p>Configure monitoring and performance metrics</p>
-    <a href="/configuration/monitoring/">Setup Monitoring</a>
+    <p>See the Logging Configuration section above for monitoring setup</p>
   </div>
 
   <div class="topic-item">
     <h4>🔐 Security Hardening</h4>
     <p>Advanced security configuration and hardening</p>
-    <a href="/configuration/security-hardening/">Security Guide</a>
+    <p>See the Security Settings section above for hardening options</p>
   </div>
 </div>
 
@@ -393,10 +393,10 @@ ai-auditor config summary
 
 Once you've configured AI Command Auditor:
 
-- 🎯 [Try the Tutorial]({{ site.baseurl }}/examples/tutorial/) - Learn with hands-on examples
-- 🔌 [Explore CLI Commands](/api/cli/) - Master the command-line interface
+- 🎯 [Try the Tutorial]({{ site.baseurl }}/examples/tutorial) - Learn with hands-on examples
+- 🔌 [Explore CLI Commands]({{ site.baseurl }}/api/) - Master the command-line interface
 - 💡 [Browse Examples](/examples/) - See real-world configurations
-- ❓ [Get Support](/support/) - Find help and community resources
+- ❓ [Get FAQ]({{ site.baseurl }}/faq/) - Find help and community resources
 
 <style>
 .config-grid {

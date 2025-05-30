@@ -7,6 +7,7 @@ description: "Install AI Command Auditor quickly and easily"
 ---
 
 # 📥 Installation Guide
+
 {: .fs-8 }
 
 AI Command Auditor offers multiple installation methods to fit your development environment and preferences. Choose the method that works best for your use case.
@@ -21,6 +22,7 @@ curl -fsSL https://raw.githubusercontent.com/etherisc/ai-command-auditor/main/in
 ```
 
 This will:
+
 - ✅ Detect your system and install dependencies
 - ✅ Install the AI Command Auditor CLI
 - ✅ Set up default configuration
@@ -45,18 +47,21 @@ ai-auditor --help
 Before installing, ensure your system meets these requirements:
 
 ### Minimum Requirements
+
 - **Operating System**: Linux, macOS, or Windows (WSL2)
 - **Python**: 3.8 or higher
 - **Memory**: 512MB RAM
 - **Disk Space**: 100MB free space
 
 ### Recommended Requirements
+
 - **Python**: 3.10 or higher
 - **Memory**: 1GB RAM
 - **Git**: For git hooks integration
 - **Internet**: For AI API calls
 
 ### Supported Platforms
+
 - ✅ Ubuntu 18.04+
 - ✅ Debian 10+
 - ✅ CentOS 7+
@@ -72,37 +77,19 @@ Before installing, ensure your system meets these requirements:
 | [Devcontainer](/installation/methods#devcontainer) | VS Code users, containerized development | Automatic setup in development containers |
 | [Manual Installation](/installation/methods#manual-installation) | Advanced users, custom setups | Step-by-step manual configuration |
 
-## 🎯 Environment-Specific Guides
+## 🎯 Environment-Specific Installation
 
-<div class="environment-grid">
-  <div class="env-guide">
-    <h4>🐧 Ubuntu/Debian</h4>
-    <p>Installation on Ubuntu and Debian systems</p>
-    <a href="/installation/environments/ubuntu/">Ubuntu Guide</a>
-  </div>
+For detailed installation instructions specific to your environment, see our [Installation Methods]({{ site.baseurl }}/installation/methods) guide which covers:
 
-  <div class="env-guide">
-    <h4>🍎 macOS</h4>
-    <p>Installation on macOS with Homebrew</p>
-    <a href="/installation/environments/macos/">macOS Guide</a>
-  </div>
-
-  <div class="env-guide">
-    <h4>🪟 Windows WSL2</h4>
-    <p>Installation on Windows with WSL2</p>
-    <a href="/installation/environments/windows/">Windows Guide</a>
-  </div>
-
-  <div class="env-guide">
-    <h4>🐳 Docker</h4>
-    <p>Installation in Docker containers</p>
-    <a href="/installation/environments/docker/">Docker Guide</a>
-  </div>
-</div>
+- **🐧 Ubuntu/Debian**: Installation on Ubuntu and Debian systems
+- **🍎 macOS**: Installation on macOS with Homebrew
+- **🪟 Windows WSL2**: Installation on Windows with WSL2
+- **🐳 Docker**: Installation in Docker containers
 
 ## ⚡ Quick Installation Examples
 
 ### For Python Projects
+
 ```bash
 # Install with Python template
 curl -fsSL https://raw.githubusercontent.com/etherisc/ai-command-auditor/main/install.sh | sh -s -- --template python
@@ -112,6 +99,7 @@ pip install ai-command-auditor[python]
 ```
 
 ### For Node.js Projects
+
 ```bash
 # Install with Node.js template
 curl -fsSL https://raw.githubusercontent.com/etherisc/ai-command-auditor/main/install.sh | sh -s -- --template nodejs
@@ -121,6 +109,7 @@ npm run audit-setup
 ```
 
 ### For DevOps/Security Teams
+
 ```bash
 # Install with strict security settings
 curl -fsSL https://raw.githubusercontent.com/etherisc/ai-command-auditor/main/install.sh | sh -s -- --template security --security-level strict
@@ -131,12 +120,14 @@ curl -fsSL https://raw.githubusercontent.com/etherisc/ai-command-auditor/main/in
 After installation, you may want to:
 
 1. **Initialize in your project**:
+
    ```bash
    cd your-project
    ai-auditor init
    ```
 
 2. **Customize configuration**:
+
    ```bash
    # Edit main config
    nano .ai-auditor/config/auditor.yml
@@ -146,11 +137,13 @@ After installation, you may want to:
    ```
 
 3. **Set up git hooks**:
+
    ```bash
    ai-auditor setup-hooks
    ```
 
 4. **Test the setup**:
+
    ```bash
    ai-auditor check-command "rm -rf /"
    ```
@@ -166,7 +159,7 @@ Having installation issues? Here are common solutions:
 > **Python Version**: Make sure you have Python 3.8+ installed. Check with `python --version`.
 
 {: .highlight }
-> **Need Help?**: Visit our [Support](/support) section for more troubleshooting tips and community help.
+> **Need Help?**: Visit our [FAQ]({{ site.baseurl }}/faq/) for more troubleshooting tips and community help.
 
 ---
 
